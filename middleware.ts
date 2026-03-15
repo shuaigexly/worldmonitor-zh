@@ -40,6 +40,7 @@ const VARIANT_OG: Record<string, { title: string; description: string; image: st
 };
 
 const ALLOWED_HOSTS = new Set([
+  'monitor.longyuxu.xyz',
   'worldmonitor.app',
   ...Object.keys(VARIANT_HOST_MAP),
 ]);
