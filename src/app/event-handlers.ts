@@ -789,14 +789,9 @@ export class EventHandlerManager implements AppModule {
     trackVariantSwitch(SITE_VARIANT, variant);
     await this.exitFullscreenForNavigation();
 
-    if (this.ctx.isDesktopApp || options.isLocalDev) {
-      localStorage.setItem('worldmonitor-variant', variant);
-      window.location.reload();
-      return;
-    }
-
-    const target = options.href || VARIANT_META[variant]?.url;
-    if (target) window.location.href = target;
+    // Self-hosted: all variants on same domain, use localStorage to switch
+    localStorage.setItem('worldmonitor-variant', variant);
+    window.location.reload();
   }
 
   toggleFullscreen(): void {
