@@ -169,6 +169,9 @@ export class Panel {
   protected header: HTMLElement;
   protected countEl: HTMLElement | null = null;
   protected statusBadgeEl: HTMLElement | null = null;
+  protected freshnessEl: HTMLElement | null = null;
+  private freshnessTimer: ReturnType<typeof setInterval> | null = null;
+  private lastFetchTime: number = 0;
   protected newBadgeEl: HTMLElement | null = null;
   protected panelId: string;
   private abortController: AbortController = new AbortController();
@@ -262,6 +265,12 @@ export class Panel {
     this.statusBadgeEl.style.display = 'none';
     this.header.appendChild(this.statusBadgeEl);
 
+    // Freshness timestamp element
+    this.freshnessEl = document.createElement('span');
+    this.freshnessEl.className = 'panel-freshness';
+    this.freshnessEl.style.display = 'none';
+    this.header.appendChild(this.freshnessEl);
+
     if (options.showCount) {
       this.countEl = document.createElement('span');
       this.countEl.className = 'panel-count';
@@ -279,6 +288,21 @@ export class Panel {
 
     this.element.appendChild(this.header);
     this.element.appendChild(this.content);
+
+    // Mobile accordion: tap header to expand/collapse
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      this.header.addEventListener('click', (e) => {
+        // Don't toggle if clicking close btn, info btn, or checkbox
+        if ((e.target as HTMLElement).closest('.panel-close-btn, .panel-info-btn, input')) return;
+        const wasExpanded = this.element.classList.contains('mobile-expanded');
+        // Collapse all siblings
+        this.element.parentElement?.querySelectorAll('.panel.mobile-expanded').forEach(el => {
+          el.classList.remove('mobile-expanded');
+        });
+        // Toggle this one
+        if (!wasExpanded) this.element.classList.add('mobile-expanded');
+      });
+    }
 
     this.content.addEventListener('click', (e) => {
       const target = (e.target as HTMLElement).closest('[data-panel-retry]');
@@ -637,11 +661,30 @@ export class Panel {
     this.statusBadgeEl.textContent = detail ? `${labels[state]} · ${detail}` : labels[state];
     this.statusBadgeEl.className = `panel-data-badge ${state}`;
     this.statusBadgeEl.style.display = 'inline-flex';
+    if (state === 'live') this.markFreshness();
   }
 
   protected clearDataBadge(): void {
     if (!this.statusBadgeEl) return;
     this.statusBadgeEl.style.display = 'none';
+  }
+
+  protected markFreshness(): void {
+    this.lastFetchTime = Date.now();
+    this.updateFreshnessDisplay();
+    if (this.freshnessTimer) clearInterval(this.freshnessTimer);
+    this.freshnessTimer = setInterval(() => this.updateFreshnessDisplay(), 30_000);
+  }
+
+  private updateFreshnessDisplay(): void {
+    if (!this.freshnessEl || !this.lastFetchTime) return;
+    const elapsed = Math.floor((Date.now() - this.lastFetchTime) / 1000);
+    let text: string;
+    if (elapsed < 60) text = '刚刚';
+    else if (elapsed < 3600) text = `${Math.floor(elapsed / 60)}分钟前`;
+    else text = `${Math.floor(elapsed / 3600)}小时前`;
+    this.freshnessEl.textContent = text;
+    this.freshnessEl.style.display = 'inline';
   }
 
   protected insertLiveCountBadge(count: number): void {
@@ -989,6 +1032,7 @@ export class Panel {
   public destroy(): void {
     this.abortController.abort();
     this.clearRetryCountdown();
+    if (this.freshnessTimer) { clearInterval(this.freshnessTimer); this.freshnessTimer = null; }
     if (this.colSpanReconcileRaf !== null) {
       cancelAnimationFrame(this.colSpanReconcileRaf);
       this.colSpanReconcileRaf = null;

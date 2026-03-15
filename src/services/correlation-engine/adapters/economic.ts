@@ -8,8 +8,8 @@ const WEIGHTS: Record<string, number> = {
   commodity_spike: 0.35,
 };
 
-const SANCTIONS_KEYWORDS = /\b(sanction|tariff|embargo|trade\s+war|ban|restrict|block|seize|freeze\s+assets|export\s+control|blacklist|decouple|decoupl|subsid|dumping|countervail|quota|levy|excise|retaliat|currency\s+manipulat|capital\s+controls|swift|cbdc|petrodollar|de-?dollar|opec|cartel|price\s+cap|oil|crude|commodity|shortage|stockpile|strategic\s+reserve|supply\s+chain|rare\s+earth|chip\s+ban|semiconductor|economic\s+warfare|financial\s+weapon)\b/i;
-const COMMODITY_SYMBOLS = new Set(['CL=F', 'GC=F', 'NG=F', 'SI=F', 'HG=F', 'ZW=F', 'BTC-USD', 'BZ=F', 'ETH-USD', 'KC=F', 'SB=F', 'CT=F', 'CC=F']);
+const SANCTIONS_KEYWORDS = /\b(sanction|tariff|embargo|trade\s+war|ban|restrict|block|seize|freeze\s+assets|export\s+control|blacklist|decouple|decoupl|subsid|dumping|countervail|quota|levy|excise|retaliat|currency\s+manipulat|capital\s+controls|swift|cbdc|petrodollar|de-?dollar|opec|cartel|price\s+cap|oil|crude|commodity|shortage|stockpile|strategic\s+reserve|supply\s+chain|rare\s+earth|chip\s+ban|semiconductor|economic\s+warfare|financial\s+weapon)\b|\u5236\u88c1|\u5173\u7a0e|\u7981\u8fd0|\u8d38\u6613\u6218|\u51fa\u53e3\u7ba1\u5236|\u82af\u7247\u7981\u4ee4|\u7a00\u571f\u7ba1\u63a7|\u8d44\u4ea7\u51bb\u7ed3|\u91d1\u878d\u6b66\u5668|\u7ecf\u6d4e\u6218|\u6c47\u7387\u64cd\u7eb5|\u6218\u7565\u50a8\u5907|\u4f9b\u5e94\u94fe|\u534a\u5bfc\u4f53/i;
+const COMMODITY_SYMBOLS = new Set(['CL=F', 'GC=F', 'NG=F', 'SI=F', 'HG=F', 'ZW=F', 'BTC-USD', 'BZ=F', 'ETH-USD', 'KC=F', 'SB=F', 'CT=F', 'CC=F', '000001.SS', '399001.SZ', '000300.SS']);
 const SIGNIFICANT_CHANGE_PCT = 1.5;
 
 export const economicAdapter: DomainAdapter = {
@@ -91,8 +91,8 @@ export const economicAdapter: DomainAdapter = {
         })
         .filter(Boolean);
       const pctSuffix = pctParts.length > 0 ? ` (${pctParts[0]})` : '';
-      const base = `${names.join('/')} spike${pctSuffix}`;
-      if (types.has('sanctions_news')) return `${base} + sanctions`;
+      const base = `${names.join('/')} 异动${pctSuffix}`;
+      if (types.has('sanctions_news')) return `${base} + 制裁`;
       return base;
     }
 
@@ -100,7 +100,7 @@ export const economicAdapter: DomainAdapter = {
       const labels = cluster.filter(s => s.type === 'sanctions_news').map(s => s.label);
       const countries = extractMentionedEntities(labels);
       const qualifier = countries || displayEntity(entity) || '';
-      const sanctionsBase = qualifier ? `${qualifier} sanctions activity` : 'Sanctions activity';
+      const sanctionsBase = qualifier ? `${qualifier} 制裁动态` : '制裁动态';
       if (types.has('market_move')) {
         const movers = cluster.filter(s => s.type === 'market_move');
         const moverNames = movers
@@ -108,7 +108,7 @@ export const economicAdapter: DomainAdapter = {
             ?? (s.rawData as { symbol?: string })?.symbol
             ?? s.label.split(' ')[0])
           .slice(0, 2);
-        return `${sanctionsBase} + ${moverNames.join('/')} disruption`;
+        return `${sanctionsBase} + ${moverNames.join('/')} 波动`;
       }
       return sanctionsBase;
     }
@@ -120,11 +120,11 @@ export const economicAdapter: DomainAdapter = {
           ?? (s.rawData as { symbol?: string })?.symbol
           ?? s.label.split(' ')[0])
         .slice(0, 2);
-      return `Market disruption: ${names.join('/')}`;
+      return `市场波动: ${names.join('/')}`;
     }
 
     const fallbackName = displayEntity(entity);
-    return fallbackName ? `Economic convergence: ${fallbackName}` : 'Economic convergence detected';
+    return fallbackName ? `经济信号汇聚: ${fallbackName}` : '检测到经济信号汇聚';
   },
 };
 

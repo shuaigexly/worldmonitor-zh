@@ -12,6 +12,15 @@ export interface Command {
   category: 'navigate' | 'layers' | 'panels' | 'view' | 'actions' | 'country';
 }
 
+// Dashboard panel presets — which panels to enable for each preset
+export const DASHBOARD_PRESETS: Record<string, string[]> = {
+  morning: ['live-news', 'markets', 'commodities', 'economic', 'macro-signals', 'asia', 'politics'],
+  asia: ['asia', 'live-news', 'markets', 'strategic-risk', 'cii', 'intel', 'gdelt-intel'],
+  trading: ['markets', 'commodities', 'heatmap', 'macro-signals', 'etf-flows', 'stablecoins', 'crypto', 'economic', 'finance'],
+  geopolitical: ['live-news', 'intel', 'gdelt-intel', 'cii', 'cascade', 'strategic-risk', 'politics', 'middleeast', 'europe', 'asia'],
+  all: [], // special: enables all panels
+};
+
 export const LAYER_PRESETS: Record<string, (keyof MapLayers)[]> = {
   military: ['bases', 'nuclear', 'flights', 'military', 'waterways'],
   finance: ['stockExchanges', 'financialCenters', 'centralBanks', 'commodityHubs', 'economic', 'tradeRoutes'],
@@ -117,6 +126,13 @@ export const COMMANDS: Command[] = [
   { id: 'panel:stablecoins', keywords: ['stablecoins', 'usdt', 'usdc'], label: 'Panel: Stablecoins', icon: '\u{1FA99}', category: 'panels' },
   { id: 'panel:monitors', keywords: ['monitors', 'my monitors', 'watchlist'], label: 'Panel: My Monitors', icon: '\u{1F4CB}', category: 'panels' },
 
+  // Dashboard presets
+  { id: 'dashboard:morning', keywords: ['morning brief', 'morning', '\u6668\u95f4\u7b80\u62a5', '\u65e9\u62a5'], label: '仪表盘: 晨间简报', icon: '\u2600\uFE0F', category: 'view' },
+  { id: 'dashboard:asia', keywords: ['asia monitor', 'asia focus', '\u4e9a\u592a\u76d1\u63a7'], label: '仪表盘: 亚太监控', icon: '\u{1F30F}', category: 'view' },
+  { id: 'dashboard:trading', keywords: ['trading', 'finance desk', '\u91d1\u878d\u4ea4\u6613', '\u4ea4\u6613'], label: '仪表盘: 金融交易', icon: '\u{1F4B9}', category: 'view' },
+  { id: 'dashboard:geopolitical', keywords: ['geopolitical', 'intel', '\u5730\u7f18\u653f\u6cbb', '\u60c5\u62a5'], label: '仪表盘: 地缘情报', icon: '\u{1F30D}', category: 'view' },
+  { id: 'dashboard:all', keywords: ['all panels', 'show all panels', '\u6240\u6709\u9762\u677f', '\u5168\u90e8\u9762\u677f'], label: '仪表盘: 全部面板', icon: '\u{1F4CB}', category: 'view' },
+
   // View / settings
   { id: 'view:dark', keywords: ['dark', 'dark mode', 'night'], label: 'Switch to dark mode', icon: '\u{1F319}', category: 'view' },
   { id: 'view:light', keywords: ['light', 'light mode', 'day'], label: 'Switch to light mode', icon: '\u2600\uFE0F', category: 'view' },
@@ -167,12 +183,48 @@ const KEYWORD_I18N_MAP: Record<string, string> = {
   refresh: 'commands.keywords.refresh',
 };
 
+// Chinese keyword aliases for direct matching (bypasses i18n key lookup)
+const ZH_KEYWORD_ALIASES: Record<string, string[]> = {
+  'nav:global': ['\u5168\u7403', '\u4e16\u754c', '\u91cd\u7f6e'],         // 全球, 世界, 重置
+  'nav:mena': ['\u4e2d\u4e1c', '\u5317\u975e'],                           // 中东, 北非
+  'nav:eu': ['\u6b27\u6d32'],                                              // 欧洲
+  'nav:asia': ['\u4e9a\u592a', '\u4e9a\u6d32'],                           // 亚太, 亚洲
+  'nav:america': ['\u7f8e\u6d32', '\u7f8e\u56fd'],                         // 美洲, 美国
+  'nav:africa': ['\u975e\u6d32'],                                          // 非洲
+  'layers:military': ['\u519b\u4e8b\u56fe\u5c42'],                        // 军事图层
+  'layers:finance': ['\u91d1\u878d\u56fe\u5c42'],                          // 金融图层
+  'layers:infra': ['\u57fa\u7840\u8bbe\u65bd'],                            // 基础设施
+  'layers:intel': ['\u60c5\u62a5\u56fe\u5c42'],                            // 情报图层
+  'layers:all': ['\u663e\u793a\u5168\u90e8', '\u6240\u6709\u56fe\u5c42'], // 显示全部, 所有图层
+  'layers:none': ['\u9690\u85cf\u5168\u90e8', '\u6e05\u7a7a\u56fe\u5c42'],// 隐藏全部, 清空图层
+  'layer:ais': ['\u8239\u8236', '\u6d77\u8fd0'],                           // 船舶, 海运
+  'layer:flights': ['\u822a\u73ed', '\u98de\u673a'],                       // 航班, 飞机
+  'layer:conflicts': ['\u51b2\u7a81'],                                     // 冲突
+  'layer:protests': ['\u6297\u8bae', '\u793a\u5a01'],                      // 抗议, 示威
+  'layer:nuclear': ['\u6838\u8bbe\u65bd'],                                 // 核设施
+  'layer:fires': ['\u706b\u707e', '\u5c71\u706b'],                         // 火灾, 山火
+  'layer:weather': ['\u5929\u6c14'],                                       // 天气
+  'layer:cyber': ['\u7f51\u7edc\u5a01\u80c1'],                            // 网络威胁
+  'layer:outages': ['\u65ad\u7f51', '\u4e2d\u65ad'],                       // 断网, 中断
+  'view:dark': ['\u6df1\u8272\u6a21\u5f0f', '\u6697\u8272'],              // 深色模式, 暗色
+  'view:light': ['\u6d45\u8272\u6a21\u5f0f', '\u4eae\u8272'],             // 浅色模式, 亮色
+  'view:settings': ['\u8bbe\u7f6e', '\u914d\u7f6e'],                       // 设置, 配置
+  'view:refresh': ['\u5237\u65b0', '\u91cd\u65b0\u52a0\u8f7d'],           // 刷新, 重新加载
+  'view:fullscreen': ['\u5168\u5c4f'],                                     // 全屏
+  'panel:markets': ['\u5e02\u573a', '\u80a1\u7968'],                       // 市场, 股票
+  'panel:commodities': ['\u5927\u5b97\u5546\u54c1'],                       // 大宗商品
+  'panel:live-news': ['\u65b0\u95fb', '\u5b9e\u65f6\u65b0\u95fb'],        // 新闻, 实时新闻
+  'panel:economic': ['\u7ecf\u6d4e\u6307\u6807'],                          // 经济指标
+  'panel:crypto': ['\u52a0\u5bc6\u8d27\u5e01', '\u6bd4\u7279\u5e01'],    // 加密货币, 比特币
+};
+
 function injectLocalizedKeywords(commands: Command[]): Command[] {
   const lang = getCurrentLanguage();
   if (lang === 'en') return commands;
 
   return commands.map(cmd => {
     const extra: string[] = [];
+    // i18n key-based localization
     for (const kw of cmd.keywords) {
       const i18nKey = KEYWORD_I18N_MAP[kw];
       if (i18nKey) {
@@ -180,6 +232,13 @@ function injectLocalizedKeywords(commands: Command[]): Command[] {
         if (localized !== kw && !cmd.keywords.includes(localized)) {
           extra.push(localized);
         }
+      }
+    }
+    // Direct Chinese aliases
+    const zhAliases = ZH_KEYWORD_ALIASES[cmd.id];
+    if (zhAliases) {
+      for (const alias of zhAliases) {
+        if (!cmd.keywords.includes(alias)) extra.push(alias);
       }
     }
     if (extra.length === 0) return cmd;

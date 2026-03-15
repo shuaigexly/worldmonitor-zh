@@ -3,8 +3,10 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 // English is always needed as fallback — bundle it eagerly.
 import enTranslation from '../locales/en.json';
+// Chinese is the primary language for this deployment — bundle it eagerly too.
+import zhTranslation from '../locales/zh.json';
 
-const SUPPORTED_LANGUAGES = ['en', 'bg', 'cs', 'fr', 'de', 'el', 'es', 'it', 'pl', 'pt', 'nl', 'sv', 'ru', 'ar', 'zh', 'ja', 'ko', 'ro', 'tr', 'th', 'vi'] as const;
+const SUPPORTED_LANGUAGES = ['zh', 'en', 'ja', 'ko'] as const;
 type SupportedLanguage = typeof SUPPORTED_LANGUAGES[number];
 type TranslationDictionary = Record<string, unknown>;
 
@@ -17,7 +19,7 @@ const localeModules = import.meta.glob<TranslationDictionary>(
   { import: 'default' },
 );
 
-const RTL_LANGUAGES = new Set(['ar']);
+const RTL_LANGUAGES = new Set<string>();
 
 function normalizeLanguage(lng: string): SupportedLanguage {
   const base = (lng || 'en').split('-')[0]?.toLowerCase() || 'en';
@@ -71,15 +73,18 @@ export async function initI18n(): Promise<void> {
   }
 
   loadedLanguages.add('en');
+  loadedLanguages.add('zh');
 
   await i18next
     .use(LanguageDetector)
     .init({
       resources: {
         en: { translation: enTranslation as TranslationDictionary },
+        zh: { translation: zhTranslation as TranslationDictionary },
       },
       supportedLngs: [...SUPPORTED_LANGUAGES],
       nonExplicitSupportedLngs: true,
+      lng: 'zh',
       fallbackLng: 'en',
       debug: import.meta.env.DEV,
       interpolation: {
@@ -130,25 +135,8 @@ export function getLocale(): string {
 }
 
 export const LANGUAGES = [
-  { code: 'en', label: 'English', flag: '🇬🇧' },
-  { code: 'bg', label: 'Български', flag: '🇧🇬' },
-  { code: 'ar', label: 'العربية', flag: '🇸🇦' },
-  { code: 'cs', label: 'Čeština', flag: '🇨🇿' },
-  { code: 'zh', label: '中文', flag: '🇨🇳' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷' },
-  { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
-  { code: 'el', label: 'Ελληνικά', flag: '🇬🇷' },
-  { code: 'es', label: 'Español', flag: '🇪🇸' },
-  { code: 'it', label: 'Italiano', flag: '🇮🇹' },
-  { code: 'pl', label: 'Polski', flag: '🇵🇱' },
-  { code: 'pt', label: 'Português', flag: '🇵🇹' },
-  { code: 'nl', label: 'Nederlands', flag: '🇳🇱' },
-  { code: 'sv', label: 'Svenska', flag: '🇸🇪' },
-  { code: 'ru', label: 'Русский', flag: '🇷🇺' },
-  { code: 'ja', label: '日本語', flag: '🇯🇵' },
-  { code: 'ko', label: '한국어', flag: '🇰🇷' },
-  { code: 'ro', label: 'Română', flag: '🇷🇴' },
-  { code: 'th', label: 'ไทย', flag: '🇹🇭' },
-  { code: 'tr', label: 'Türkçe', flag: '🇹🇷' },
-  { code: 'vi', label: 'Tiếng Việt', flag: '🇻🇳' },
+  { code: 'zh', label: '中文', flag: 'CN' },
+  { code: 'en', label: 'English', flag: 'US' },
+  { code: 'ja', label: '日本語', flag: 'JP' },
+  { code: 'ko', label: '한국어', flag: 'KR' },
 ];

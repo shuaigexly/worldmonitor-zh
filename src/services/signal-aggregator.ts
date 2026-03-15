@@ -63,30 +63,56 @@ export interface SignalSummary {
   aiContext: string;
 }
 
-const REGION_DEFINITIONS: Record<string, { countries: string[]; name: string }> = {
+const REGION_DEFINITIONS: Record<string, { countries: string[]; name: string; nameZh: string }> = {
   middle_east: {
     name: 'Middle East',
+    nameZh: '中东',
     countries: ['IR', 'IL', 'SA', 'AE', 'IQ', 'SY', 'YE', 'JO', 'LB', 'KW', 'QA', 'OM', 'BH'],
   },
   east_asia: {
     name: 'East Asia',
+    nameZh: '东亚',
     countries: ['CN', 'TW', 'JP', 'KR', 'KP', 'HK', 'MN'],
   },
   south_asia: {
     name: 'South Asia',
+    nameZh: '南亚',
     countries: ['IN', 'PK', 'BD', 'AF', 'NP', 'LK', 'MM'],
   },
   europe_east: {
     name: 'Eastern Europe',
+    nameZh: '东欧',
     countries: ['UA', 'RU', 'BY', 'PL', 'RO', 'MD', 'HU', 'CZ', 'SK', 'BG'],
   },
   africa_north: {
     name: 'North Africa',
+    nameZh: '北非',
     countries: ['EG', 'LY', 'DZ', 'TN', 'MA', 'SD', 'SS'],
   },
   africa_sahel: {
     name: 'Sahel Region',
+    nameZh: '萨赫勒',
     countries: ['ML', 'NE', 'BF', 'TD', 'NG', 'CM', 'CF'],
+  },
+  south_china_sea: {
+    name: 'South China Sea',
+    nameZh: '南海',
+    countries: ['CN', 'TW', 'PH', 'VN', 'MY', 'BN', 'ID'],
+  },
+  taiwan_strait: {
+    name: 'Taiwan Strait',
+    nameZh: '台海',
+    countries: ['CN', 'TW', 'JP'],
+  },
+  southeast_asia: {
+    name: 'Southeast Asia',
+    nameZh: '东南亚',
+    countries: ['VN', 'TH', 'PH', 'MM', 'MY', 'SG', 'ID', 'LA', 'KH', 'BN'],
+  },
+  central_asia: {
+    name: 'Central Asia',
+    nameZh: '中亚',
+    countries: ['KZ', 'UZ', 'TM', 'TJ', 'KG'],
   },
 };
 
@@ -473,25 +499,25 @@ class SignalAggregator {
 
       if (allTypes.size >= 2) {
         const typeLabels: Record<SignalType, string> = {
-          internet_outage: 'internet disruptions',
-          military_flight: 'military air activity',
-          military_vessel: 'naval presence',
-          protest: 'civil unrest',
-          ais_disruption: 'shipping anomalies',
-          satellite_fire: 'thermal anomalies',
-          temporal_anomaly: 'baseline anomalies',
-          active_strike: 'active strikes',
+          internet_outage: '互联网中断',
+          military_flight: '军事空中活动',
+          military_vessel: '海军存在',
+          protest: '社会动荡',
+          ais_disruption: '航运异常',
+          satellite_fire: '热异常',
+          temporal_anomaly: '基线偏离',
+          active_strike: '军事打击',
         };
 
-        const typeDescriptions = [...allTypes].map(t => typeLabels[t]).join(', ');
-        const countries = regionClusters.map(c => c.countryName).join(', ');
+        const typeDescriptions = [...allTypes].map(t => typeLabels[t]).join('、');
+        const countries = regionClusters.map(c => c.countryName).join('、');
 
         convergences.push({
-          region: def.name,
+          region: def.nameZh,
           countries: regionClusters.map(c => c.country),
           signalTypes: [...allTypes],
           totalSignals,
-          description: `${def.name}: ${typeDescriptions} detected across ${countries}`,
+          description: `${def.nameZh}: 在 ${countries} 检测到 ${typeDescriptions}`,
         });
       }
     }

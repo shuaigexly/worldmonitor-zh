@@ -200,12 +200,12 @@ function formatSignedPercent(value: number | null): string {
 function buildItemNote(change: number | null, relatedHeadline?: string): string {
   const stance = getStance(change);
   const moveNote = stance === 'bullish'
-    ? 'Momentum is constructive; favor leaders over laggards.'
+    ? '动能积极，关注领涨标的。'
     : stance === 'defensive'
-      ? 'Price action is under pressure; protect capital first.'
-      : 'Tape is balanced; wait for confirmation before pressing size.';
+      ? '价格承压，优先保护资本。'
+      : '盘面均衡，等待确认信号后再加仓。';
   return relatedHeadline
-    ? `${moveNote} Headline driver: ${relatedHeadline}`
+    ? `${moveNote} 驱动新闻: ${relatedHeadline}`
     : moveNote;
 }
 
@@ -215,15 +215,15 @@ function buildRuleSummary(items: DailyMarketBriefItem[], headlineCount: number):
   const neutral = items.length - bullish - defensive;
 
   const bias = bullish > defensive
-    ? 'Risk appetite is leaning positive across the tracked watchlist.'
+    ? '关注列表整体风险偏好偏多。'
     : defensive > bullish
-      ? 'The watchlist is trading defensively and breadth is soft.'
-      : 'The watchlist is mixed and conviction is limited.';
+      ? '关注列表整体偏防御，市场广度较弱。'
+      : '关注列表多空分歧较大，方向不明确。';
 
-  const breadth = `Leaders: ${bullish}, neutral setups: ${neutral}, defensive names: ${defensive}.`;
+  const breadth = `领涨: ${bullish}，中性: ${neutral}，防御: ${defensive}。`;
   const headlines = headlineCount > 0
-    ? `News flow remains active with ${headlineCount} relevant headline${headlineCount === 1 ? '' : 's'} in scope.`
-    : 'Headline flow is thin, so price action matters more than narrative today.';
+    ? `新闻流保持活跃，共 ${headlineCount} 条相关头条。`
+    : '新闻流较淡，今日价格走势比叙事更重要。';
 
   return `${bias} ${breadth} ${headlines}`;
 }
@@ -234,17 +234,17 @@ function buildActionPlan(items: DailyMarketBriefItem[], headlineCount: number): 
 
   if (defensive > bullish) {
     return headlineCount > 0
-      ? 'Keep gross exposure light, wait for downside to stabilize, and let macro headlines clear before adding risk.'
-      : 'Keep exposure light and wait for price to reclaim short-term momentum before adding risk.';
+      ? '控制总仓位，等待下行企稳，宏观新闻明朗后再加风险敞口。'
+      : '控制仓位，等待价格恢复短期动能后再考虑加仓。';
   }
 
   if (bullish >= 2) {
     return headlineCount > 0
-      ? 'Lean into relative strength, but size entries around macro releases and company-specific headlines.'
-      : 'Lean into the strongest names on pullbacks and avoid chasing extended opening moves.';
+      ? '顺势跟进强势标的，但注意围绕宏观数据发布和个股新闻控制仓位。'
+      : '回调时布局最强标的，避免追高开盘冲高。';
   }
 
-  return 'Stay selective, trade the cleanest relative-strength setups, and let index direction confirm before scaling.';
+  return '保持精选，交易最清晰的相对强势标的，等待指数方向确认后再加码。';
 }
 
 function buildRiskWatch(items: DailyMarketBriefItem[], headlines: NewsItem[]): string {
@@ -252,15 +252,15 @@ function buildRiskWatch(items: DailyMarketBriefItem[], headlines: NewsItem[]): s
   const headlineTitles = headlines.slice(0, 2).map((item) => item.title);
 
   if (defensive.length > 0 && headlineTitles.length > 0) {
-    return `Watch ${defensive.join(', ')} for further weakness while monitoring: ${headlineTitles.join(' | ')}`;
+    return `关注 ${defensive.join('、')} 的进一步走弱，同时关注: ${headlineTitles.join(' | ')}`;
   }
   if (defensive.length > 0) {
-    return `Watch ${defensive.join(', ')} for further weakness and avoid averaging into fading momentum.`;
+    return `关注 ${defensive.join('、')} 的进一步走弱，避免在动能衰减时摊薄成本。`;
   }
   if (headlineTitles.length > 0) {
-    return `Headline watch: ${headlineTitles.join(' | ')}`;
+    return `新闻关注: ${headlineTitles.join(' | ')}`;
   }
-  return 'Risk watch is centered on macro follow-through, index breadth, and any abrupt reversal in the strongest names.';
+  return '风险关注重点：宏观数据跟进、指数广度变化、以及强势标的的突然反转。';
 }
 
 function buildSummaryInputs(items: DailyMarketBriefItem[], headlines: NewsItem[]): string[] {
@@ -322,10 +322,10 @@ export async function buildDailyMarketBrief(options: BuildDailyMarketBriefOption
   if (items.length === 0) {
     return {
       available: false,
-      title: `Daily Market Brief • ${formatTitleDate(now, timezone)}`,
+      title: `每日市场简报 • ${formatTitleDate(now, timezone)}`,
       dateKey: getDateKey(now, timezone),
       timezone,
-      summary: 'Market data is not available yet for the daily brief.',
+      summary: '每日简报的市场数据暂不可用。',
       actionPlan: '',
       riskWatch: '',
       items: [],
@@ -346,11 +346,13 @@ export async function buildDailyMarketBrief(options: BuildDailyMarketBriefOption
   if (summaryInputs.length >= 2) {
     try {
       const summaryProvider = options.summarize || await getDefaultSummarizer();
+      const { getCurrentLanguage } = await import('./i18n');
+      const lang = getCurrentLanguage();
       const generated = await summaryProvider(
         summaryInputs,
         undefined,
-        'Daily market briefing for a tracked watchlist',
-        'en',
+        lang === 'zh' ? '根据关注列表生成的每日市场简报，请用中文回复' : 'Daily market briefing for a tracked watchlist',
+        lang,
       );
       if (generated?.summary) {
         summary = generated.summary.trim();
@@ -365,7 +367,7 @@ export async function buildDailyMarketBrief(options: BuildDailyMarketBriefOption
 
   return {
     available: true,
-    title: `Daily Market Brief • ${formatTitleDate(now, timezone)}`,
+    title: `每日市场简报 • ${formatTitleDate(now, timezone)}`,
     dateKey: getDateKey(now, timezone),
     timezone,
     summary,

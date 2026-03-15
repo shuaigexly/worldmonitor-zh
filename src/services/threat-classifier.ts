@@ -265,6 +265,88 @@ const TECH_LOW_KEYWORDS: KeywordMap = {
   'open source': 'tech',
 };
 
+// Chinese keyword maps — no word boundary needed for CJK
+const ZH_CRITICAL_KEYWORDS: KeywordMap = {
+  '\u6838\u6253\u51fb': 'military',       // 核打击
+  '\u6838\u6218\u4e89': 'military',       // 核战争
+  '\u5168\u9762\u6218\u4e89': 'conflict', // 全面战争
+  '\u5165\u4fb5': 'conflict',             // 入侵
+  '\u5ba3\u6218': 'conflict',             // 宣战
+  '\u6234\u4e25\u4ee4': 'military',       // 戒严令
+  '\u653f\u53d8': 'military',             // 政变
+  '\u5316\u5b66\u6b66\u5668\u88ad\u51fb': 'terrorism', // 化学武器袭击
+  '\u751f\u7269\u6b66\u5668': 'terrorism', // 生物武器
+  '\u5927\u89c4\u6a21\u4f24\u4ea1': 'conflict', // 大规模伤亡
+  '\u53f0\u6d77\u5371\u673a': 'military', // 台海危机
+  '\u6b66\u7edf': 'military',             // 武统
+  '\u653b\u53f0': 'military',             // 攻台
+  '\u5168\u9762\u5c01\u9501': 'military', // 全面封锁
+};
+
+const ZH_HIGH_KEYWORDS: KeywordMap = {
+  '\u7a7a\u88ad': 'conflict',             // 空袭
+  '\u5bfc\u5f39\u53d1\u5c04': 'military', // 导弹发射
+  '\u5bfc\u5f39': 'military',             // 导弹
+  '\u519b\u4e8b\u5347\u7ea7': 'military', // 军事升级
+  '\u519b\u4e8b\u884c\u52a8': 'military', // 军事行动
+  '\u70ae\u51fb': 'conflict',             // 炮击
+  '\u8f70\u70b8': 'conflict',             // 轰炸
+  '\u4f24\u4ea1': 'conflict',             // 伤亡
+  '\u6050\u6016\u88ad\u51fb': 'terrorism', // 恐怖袭击
+  '\u7f51\u7edc\u653b\u51fb': 'cyber',   // 网络攻击
+  '\u52d2\u7d22\u8f6f\u4ef6': 'cyber',   // 勒索软件
+  '\u5236\u88c1': 'economic',             // 制裁
+  '\u7981\u8fd0': 'economic',             // 禁运
+  '\u5730\u9707': 'disaster',             // 地震
+  '\u6d77\u5578': 'disaster',             // 海啸
+  '\u53f0\u98ce': 'disaster',             // 台风
+  '\u519b\u6f14': 'military',             // 军演
+  '\u5b9e\u5f39\u5c04\u51fb': 'military', // 实弹射击
+  '\u6218\u6597\u673a\u8d77\u98de': 'military', // 战斗机起飞
+  '\u822a\u6bcd\u7f16\u961f': 'military', // 航母编队
+  '\u8d8a\u8fc7\u4e2d\u7ebf': 'military', // 越过中线
+  '\u9632\u7a7a\u8bc6\u522b\u533a': 'military', // 防空识别区
+};
+
+const ZH_MEDIUM_KEYWORDS: KeywordMap = {
+  '\u6297\u8bae': 'protest',              // 抗议
+  '\u793a\u5a01': 'protest',              // 示威
+  '\u9a9a\u4e71': 'protest',              // 骚乱
+  '\u8d38\u6613\u6218': 'economic',       // 贸易战
+  '\u5173\u7a0e': 'economic',             // 关税
+  '\u901a\u8d27\u81a8\u80c0': 'economic', // 通货膨胀
+  '\u80a1\u5e02\u5d29\u76d8': 'economic', // 股市崩盘
+  '\u6d2a\u6c34': 'disaster',             // 洪水
+  '\u5c71\u706b': 'disaster',             // 山火
+  '\u706b\u5c71\u7206\u53d1': 'disaster', // 火山爆发
+  '\u7591\u4f3c\u75ab\u60c5': 'health',   // 疑似疫情
+  '\u7ba1\u9053\u7206\u70b8': 'infrastructure', // 管道爆炸
+  '\u505c\u7535': 'infrastructure',       // 停电
+  '\u65ad\u7f51': 'infrastructure',       // 断网
+  '\u5916\u4ea4\u5371\u673a': 'diplomatic', // 外交危机
+  '\u53ec\u56de\u5927\u4f7f': 'diplomatic', // 召回大使
+  '\u9a71\u9010\u5916\u4ea4\u5b98': 'diplomatic', // 驱逐外交官
+  '\u7a00\u571f\u7ba1\u63a7': 'economic', // 稀土管控
+  '\u82af\u7247\u7981\u4ee4': 'economic', // 芯片禁令
+  '\u51fa\u53e3\u7ba1\u5236': 'economic', // 出口管制
+};
+
+const ZH_LOW_KEYWORDS: KeywordMap = {
+  '\u9009\u4e3e': 'diplomatic',           // 选举
+  '\u5cf0\u4f1a': 'diplomatic',           // 峰会
+  '\u6761\u7ea6': 'diplomatic',           // 条约
+  '\u505c\u706b': 'diplomatic',           // 停火
+  '\u548c\u5e73\u534f\u8bae': 'diplomatic', // 和平协议
+  '\u8c08\u5224': 'diplomatic',           // 谈判
+  '\u5229\u7387': 'economic',             // 利率
+  '\u5931\u4e1a\u7387': 'economic',       // 失业率
+  '\u6c14\u5019\u53d8\u5316': 'environmental', // 气候变化
+  '\u5e72\u65f1': 'environmental',        // 干旱
+  '\u6c61\u67d3': 'environmental',        // 污染
+  '\u75ab\u82d7': 'health',               // 疫苗
+  '\u75ab\u60c5': 'health',               // 疫情
+};
+
 const EXCLUSIONS = [
   'protein', 'couples', 'relationship', 'dating', 'diet', 'fitness',
   'recipe', 'cooking', 'shopping', 'fashion', 'celebrity', 'movie',
@@ -319,11 +401,24 @@ function matchKeywords(
 // Compound escalation: HIGH military/conflict + critical geopolitical target → CRITICAL
 // Handles headlines like "strikes by US and Israel on Iran" where words aren't adjacent
 const ESCALATION_ACTIONS = /\b(attack|attacks|attacked|strike|strikes|struck|bomb|bombs|bombed|bombing|shell|shelled|shelling|missile|missiles|intercept|intercepted|retaliates|retaliating|retaliation|killed|casualties|offensive|invaded|invades)\b/;
-const ESCALATION_TARGETS = /\b(iran|tehran|isfahan|tabriz|russia|moscow|china|beijing|taiwan|taipei|north korea|pyongyang|nato|us base|us forces|american forces|us military)\b/;
+const ESCALATION_TARGETS = /\b(iran|tehran|isfahan|tabriz|russia|moscow|china|beijing|taiwan|taipei|north korea|pyongyang|nato|us base|us forces|american forces|us military)\b|\u4f0a\u6717|\u4fc4\u7f57\u65af|\u4e2d\u56fd|\u5317\u4eac|\u53f0\u6e7e|\u53f0\u5317|\u671d\u9c9c|\u5e73\u58e4|\u5357\u6d77|\u4e1c\u6d77/;
 
 function shouldEscalateToCritical(lower: string, matchCat: EventCategory): boolean {
   if (matchCat !== 'conflict' && matchCat !== 'military') return false;
   return ESCALATION_ACTIONS.test(lower) && ESCALATION_TARGETS.test(lower);
+}
+
+// CJK keyword matching — simple includes (no word boundary needed)
+function matchZhKeywords(
+  text: string,
+  keywords: KeywordMap
+): { keyword: string; category: EventCategory } | null {
+  for (const [kw, cat] of Object.entries(keywords)) {
+    if (text.includes(kw)) {
+      return { keyword: kw, category: cat };
+    }
+  }
+  return null;
 }
 
 export function classifyByKeyword(title: string, variant = 'full'): ThreatClassification {
@@ -336,10 +431,11 @@ export function classifyByKeyword(title: string, variant = 'full'): ThreatClassi
   const isTech = variant === 'tech';
 
   // Priority cascade: critical → high → medium → low → info
-  let match = matchKeywords(lower, CRITICAL_KEYWORDS);
+  // Check both English and Chinese keywords at each level
+  let match = matchKeywords(lower, CRITICAL_KEYWORDS) ?? matchZhKeywords(title, ZH_CRITICAL_KEYWORDS);
   if (match) return { level: 'critical', category: match.category, confidence: 0.9, source: 'keyword' };
 
-  match = matchKeywords(lower, HIGH_KEYWORDS);
+  match = matchKeywords(lower, HIGH_KEYWORDS) ?? matchZhKeywords(title, ZH_HIGH_KEYWORDS);
   if (match) {
     // Compound escalation: military action + critical geopolitical target → CRITICAL
     if (shouldEscalateToCritical(lower, match.category)) {
@@ -353,7 +449,7 @@ export function classifyByKeyword(title: string, variant = 'full'): ThreatClassi
     if (match) return { level: 'high', category: match.category, confidence: 0.75, source: 'keyword' };
   }
 
-  match = matchKeywords(lower, MEDIUM_KEYWORDS);
+  match = matchKeywords(lower, MEDIUM_KEYWORDS) ?? matchZhKeywords(title, ZH_MEDIUM_KEYWORDS);
   if (match) return { level: 'medium', category: match.category, confidence: 0.7, source: 'keyword' };
 
   if (isTech) {
@@ -361,7 +457,7 @@ export function classifyByKeyword(title: string, variant = 'full'): ThreatClassi
     if (match) return { level: 'medium', category: match.category, confidence: 0.65, source: 'keyword' };
   }
 
-  match = matchKeywords(lower, LOW_KEYWORDS);
+  match = matchKeywords(lower, LOW_KEYWORDS) ?? matchZhKeywords(title, ZH_LOW_KEYWORDS);
   if (match) return { level: 'low', category: match.category, confidence: 0.6, source: 'keyword' };
 
   if (isTech) {

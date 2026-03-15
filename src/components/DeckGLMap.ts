@@ -90,7 +90,7 @@ import {
 } from '@/config';
 import type { GulfInvestment } from '@/types';
 import { resolveTradeRouteSegments, TRADE_ROUTES as TRADE_ROUTES_LIST, type TradeRouteSegment } from '@/config/trade-routes';
-import { getLayersForVariant, resolveLayerLabel, bindLayerSearch, type MapVariant } from '@/config/map-layer-definitions';
+import { getLayersForVariant, resolveLayerLabel, bindLayerSearch, LAYER_PRESETS, type MapVariant } from '@/config/map-layer-definitions';
 import { getSecretState } from '@/services/runtime-config';
 import { MapPopup, type PopupType } from './MapPopup';
 import {
@@ -153,7 +153,7 @@ interface TechEventMarker {
 
 // View presets with longitude, latitude, zoom
 const VIEW_PRESETS: Record<DeckMapView, { longitude: number; latitude: number; zoom: number }> = {
-  global: { longitude: 0, latitude: 20, zoom: 1.5 },
+  global: { longitude: 105, latitude: 35, zoom: 2.0 },
   america: { longitude: -95, latitude: 38, zoom: 3 },
   mena: { longitude: 45, latitude: 28, zoom: 3.5 },
   eu: { longitude: 15, latitude: 50, zoom: 3.5 },
@@ -3922,6 +3922,9 @@ export class DeckGLMap {
         <button class="toggle-collapse">&#9660;</button>
       </div>
       <input type="text" class="layer-search" placeholder="${t('components.deckgl.layerSearch')}" autocomplete="off" spellcheck="false" />
+      <div class="layer-presets" style="display:flex;gap:4px;flex-wrap:wrap;padding:4px 0;">
+        ${LAYER_PRESETS.map(p => `<button class="layer-preset-btn" data-preset="${p.id}" style="font-size:10px;padding:2px 6px;border:1px solid var(--border);border-radius:3px;background:var(--surface);color:var(--text-secondary);cursor:pointer;white-space:nowrap;">${p.labelZh}</button>`).join('')}
+      </div>
       <div class="toggle-list" style="max-height: 32vh; overflow-y: auto; scrollbar-width: thin;">
         ${layerConfig.map(({ key, label, icon, premium }) => {
           const isLocked = premium === 'locked' && !_wmKey;
@@ -3979,6 +3982,30 @@ export class DeckGLMap {
       }, { passive: false });
       toggles.addEventListener('touchmove', (e) => e.stopPropagation(), { passive: false });
     }
+    // Preset buttons
+    toggles.querySelectorAll('.layer-preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const presetId = (btn as HTMLElement).dataset.preset;
+        const preset = LAYER_PRESETS.find(p => p.id === presetId);
+        if (!preset) return;
+        const presetSet = new Set<string>(preset.layers);
+        // Turn off all layers, then turn on preset layers
+        for (const key of Object.keys(this.state.layers) as Array<keyof MapLayers>) {
+          this.state.layers[key] = presetSet.has(key);
+        }
+        // Update checkboxes
+        toggles.querySelectorAll<HTMLInputElement>('.layer-toggle input').forEach(input => {
+          const layer = input.closest('.layer-toggle')?.getAttribute('data-layer') || '';
+          input.checked = presetSet.has(layer);
+        });
+        this.render();
+        // Highlight active preset
+        toggles.querySelectorAll('.layer-preset-btn').forEach(b => {
+          (b as HTMLElement).style.background = b === btn ? 'var(--border)' : 'var(--surface)';
+        });
+      });
+    });
+
     bindLayerSearch(toggles);
     const searchEl = toggles.querySelector('.layer-search') as HTMLElement | null;
 

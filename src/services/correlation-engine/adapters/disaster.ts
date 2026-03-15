@@ -98,12 +98,12 @@ export const disasterAdapter: DomainAdapter = {
       );
       parts.push(`M${maxMag.toFixed(1)} seismic`);
     }
-    if (types.has('infra_outage')) parts.push('infra disruption');
+    if (types.has('infra_outage')) parts.push('\u57FA\u7840\u8BBE\u65BD\u4E2D\u65AD');
 
     const quakePlace = cluster.find(s => s.type === 'earthquake')?.label?.split('\u2014')[1]?.trim();
 
     return parts.length > 0
-      ? `Disaster cascade: ${parts.join(' + ')}${quakePlace ? ` \u2014 ${quakePlace}` : ''}`
-      : 'Disaster convergence detected';
+      ? `\u707E\u5BB3\u7EA7\u8054: ${parts.join(' + ')}${quakePlace ? ` \u2014 ${quakePlace}` : ''}`
+      : '\u68C0\u6D4B\u5230\u707E\u5BB3\u4FE1\u53F7\u6C47\u805A';
   },
 };

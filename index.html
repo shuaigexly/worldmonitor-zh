@@ -1,42 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https: http://localhost:5173 ws: wss: blob: data:; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'sha256-LnMFPWZxTgVOr2VYwIh9mhQ3l/l3+a3SfNOLERnuHfY=' 'sha256-+SFBjfmi2XfnyAT3POBxf6JIKYDcNXtllPclOcaNBI0=' 'sha256-AhZAmdCW6h8iXMyBcvIrqN71FGNk4lwLD+lPxx43hxg=' 'sha256-PnEBZii+iFaNE2EyXaJhRq34g6bdjRJxpLfJALdXYt8=' 'sha256-cVhuR63Moy56DV5yG0caJCEyCugMTbYclkvkK6fSwXY=' 'sha256-903UI9my1I7mqHoiVeZSc56yd50YoRJTB2269QqL76w=' 'wasm-unsafe-eval' https://www.youtube.com https://static.cloudflareinsights.com https://vercel.live; worker-src 'self' blob:; font-src 'self' data: https:; media-src 'self' data: blob: https: http://127.0.0.1:* http://localhost:*; frame-src 'self' http://127.0.0.1:* http://localhost:* https://worldmonitor.app https://tech.worldmonitor.app https://finance.worldmonitor.app https://commodity.worldmonitor.app https://happy.worldmonitor.app https://www.youtube.com https://www.youtube-nocookie.com https://webcams.windy.com;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https: http://localhost:5173 ws: wss: blob: data:; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'sha256-LnMFPWZxTgVOr2VYwIh9mhQ3l/l3+a3SfNOLERnuHfY=' 'sha256-+SFBjfmi2XfnyAT3POBxf6JIKYDcNXtllPclOcaNBI0=' 'sha256-AhZAmdCW6h8iXMyBcvIrqN71FGNk4lwLD+lPxx43hxg=' 'sha256-PnEBZii+iFaNE2EyXaJhRq34g6bdjRJxpLfJALdXYt8=' 'sha256-cVhuR63Moy56DV5yG0caJCEyCugMTbYclkvkK6fSwXY=' 'sha256-903UI9my1I7mqHoiVeZSc56yd50YoRJTB2269QqL76w=' 'wasm-unsafe-eval' https://www.youtube.com https://static.cloudflareinsights.com https://vercel.live; worker-src 'self' blob:; font-src 'self' data: https:; media-src 'self' data: blob: https: http://127.0.0.1:* http://localhost:*; frame-src 'self' http://127.0.0.1:* http://localhost:* https://monitor.longyuxu.xyz https://www.youtube.com https://www.youtube-nocookie.com https://webcams.windy.com;" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <!-- Primary Meta Tags -->
-    <title>World Monitor - Real-Time Global Intelligence Dashboard</title>
-    <meta name="title" content="World Monitor - Real-Time Global Intelligence Dashboard" />
-    <meta name="description" content="AI-powered real-time global intelligence dashboard with live news, markets, military tracking, infrastructure monitoring, and geopolitical data. OSINT in one view." />
-    <meta name="keywords" content="AI intelligence, AI-powered dashboard, global intelligence, geopolitical dashboard, world news, market data, military bases, nuclear facilities, undersea cables, conflict zones, real-time monitoring, situation awareness, OSINT, flight tracking, AIS ships, earthquake monitor, protest tracker, power outages, oil prices, government spending, polymarket predictions" />
-    <meta name="author" content="Elie Habib" />
+    <title>World Monitor - AI 驱动的实时全球情报仪表盘</title>
+    <meta name="title" content="World Monitor - AI 驱动的实时全球情报仪表盘" />
+    <meta name="description" content="AI 驱动的实时全球情报仪表盘，提供实时新闻、金融市场、军事追踪、基础设施监控和地缘政治数据。OSINT 一站式视图。" />
+    <meta name="keywords" content="AI情报, 全球情报, 地缘政治仪表盘, 世界新闻, 市场数据, 军事基地, 核设施, 海底电缆, 冲突地区, 实时监控, 态势感知, OSINT, 航班追踪, AIS船舶, 地震监测, 抗议追踪, 油价, AI intelligence, global intelligence, geopolitical dashboard" />
+    <meta name="author" content="Longyu Xu" />
     <meta name="theme-color" content="#0a0f0a" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://www.worldmonitor.app/" />
-    <link rel="alternate" hreflang="x-default" href="https://www.worldmonitor.app/" />
-    <link rel="alternate" hreflang="en" href="https://www.worldmonitor.app/" />
-    <link rel="alternate" hreflang="ar" href="https://www.worldmonitor.app/?lang=ar" />
-    <link rel="alternate" hreflang="bg" href="https://www.worldmonitor.app/?lang=bg" />
-    <link rel="alternate" hreflang="cs" href="https://www.worldmonitor.app/?lang=cs" />
-    <link rel="alternate" hreflang="de" href="https://www.worldmonitor.app/?lang=de" />
-    <link rel="alternate" hreflang="el" href="https://www.worldmonitor.app/?lang=el" />
-    <link rel="alternate" hreflang="es" href="https://www.worldmonitor.app/?lang=es" />
-    <link rel="alternate" hreflang="fr" href="https://www.worldmonitor.app/?lang=fr" />
-    <link rel="alternate" hreflang="it" href="https://www.worldmonitor.app/?lang=it" />
-    <link rel="alternate" hreflang="ja" href="https://www.worldmonitor.app/?lang=ja" />
-    <link rel="alternate" hreflang="ko" href="https://www.worldmonitor.app/?lang=ko" />
-    <link rel="alternate" hreflang="nl" href="https://www.worldmonitor.app/?lang=nl" />
-    <link rel="alternate" hreflang="pl" href="https://www.worldmonitor.app/?lang=pl" />
-    <link rel="alternate" hreflang="pt" href="https://www.worldmonitor.app/?lang=pt" />
-    <link rel="alternate" hreflang="ro" href="https://www.worldmonitor.app/?lang=ro" />
-    <link rel="alternate" hreflang="ru" href="https://www.worldmonitor.app/?lang=ru" />
-    <link rel="alternate" hreflang="sv" href="https://www.worldmonitor.app/?lang=sv" />
-    <link rel="alternate" hreflang="th" href="https://www.worldmonitor.app/?lang=th" />
-    <link rel="alternate" hreflang="tr" href="https://www.worldmonitor.app/?lang=tr" />
-    <link rel="alternate" hreflang="vi" href="https://www.worldmonitor.app/?lang=vi" />
-    <link rel="alternate" hreflang="zh" href="https://www.worldmonitor.app/?lang=zh" />
+    <link rel="canonical" href="https://monitor.longyuxu.xyz/" />
+    <link rel="alternate" hreflang="x-default" href="https://monitor.longyuxu.xyz/" />
+    <link rel="alternate" hreflang="zh" href="https://monitor.longyuxu.xyz/" />
+    <link rel="alternate" hreflang="en" href="https://monitor.longyuxu.xyz/?lang=en" />
+    <link rel="alternate" hreflang="ja" href="https://monitor.longyuxu.xyz/?lang=ja" />
+    <link rel="alternate" hreflang="ko" href="https://monitor.longyuxu.xyz/?lang=ko" />
 
     <!-- Additional Search Discovery -->
     <meta name="application-name" content="World Monitor" />
@@ -48,22 +31,22 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.worldmonitor.app/" />
-    <meta property="og:title" content="World Monitor - Real-Time Global Intelligence Dashboard" />
-    <meta property="og:description" content="AI-powered real-time global intelligence dashboard with live news, markets, military tracking, infrastructure monitoring, and geopolitical data." />
-    <meta property="og:image" content="https://www.worldmonitor.app/favico/og-image.png" />
+    <meta property="og:url" content="https://monitor.longyuxu.xyz/" />
+    <meta property="og:title" content="World Monitor - AI 驱动的实时全球情报仪表盘" />
+    <meta property="og:description" content="AI 驱动的实时全球情报仪表盘，提供实时新闻、金融市场、军事追踪、基础设施监控和地缘政治数据。" />
+    <meta property="og:image" content="https://monitor.longyuxu.xyz/favico/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="World Monitor — real-time global intelligence dashboard with 3D globe, live markets, geopolitical data, and infrastructure monitoring" />
     <meta property="og:site_name" content="World Monitor" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content="zh_CN" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://www.worldmonitor.app/" />
-    <meta name="twitter:title" content="World Monitor - Real-Time Global Intelligence Dashboard" />
-    <meta name="twitter:description" content="AI-powered real-time global intelligence dashboard with live news, markets, military tracking, infrastructure monitoring, and geopolitical data." />
-    <meta name="twitter:image" content="https://www.worldmonitor.app/favico/og-image.png" />
+    <meta name="twitter:url" content="https://monitor.longyuxu.xyz/" />
+    <meta name="twitter:title" content="World Monitor - AI 驱动的实时全球情报仪表盘" />
+    <meta name="twitter:description" content="AI 驱动的实时全球情报仪表盘，提供实时新闻、金融市场、军事追踪、基础设施监控和地缘政治数据。" />
+    <meta name="twitter:image" content="https://monitor.longyuxu.xyz/favico/og-image.png" />
     <meta name="twitter:site" content="@worldmonitorai" />
     <meta name="twitter:creator" content="@worldmonitorai" />
 
@@ -74,13 +57,13 @@
       "@type": "WebApplication",
       "name": "World Monitor",
       "alternateName": "World Monitor",
-      "url": "https://www.worldmonitor.app/",
+      "url": "https://monitor.longyuxu.xyz/",
       "description": "Open-source real-time OSINT dashboard for geopolitical monitoring, conflict tracking, military flight tracking, maritime AIS, and global threat intelligence. Used by 2M+ people across 190+ countries.",
       "applicationCategory": "SecurityApplication",
       "operatingSystem": "Web, Windows, macOS, Linux",
       "offers": [
         { "@type": "Offer", "price": "0", "priceCurrency": "USD", "name": "Free", "description": "Full dashboard with 435+ sources, 45 map layers, BYOK AI" },
-        { "@type": "Offer", "price": "0", "priceCurrency": "USD", "name": "Pro (Waitlist)", "url": "https://www.worldmonitor.app/pro" }
+        { "@type": "Offer", "price": "0", "priceCurrency": "USD", "name": "Pro (Waitlist)", "url": "https://monitor.longyuxu.xyz/pro" }
       ],
       "author": {
         "@type": "Person",
@@ -107,7 +90,7 @@
         "435+ curated RSS news feeds",
         "21 language support with RTL"
       ],
-      "screenshot": "https://www.worldmonitor.app/favico/og-image.png",
+      "screenshot": "https://monitor.longyuxu.xyz/favico/og-image.png",
       "sameAs": [
         "https://github.com/koala73/worldmonitor",
         "https://x.com/worldmonitorai",
@@ -148,8 +131,12 @@
       .skeleton-panel-body{flex:1;padding:12px;display:flex;flex-direction:column;gap:10px}
       .skeleton-line{height:14px;border-radius:4px;background:linear-gradient(90deg,rgba(255,255,255,.05) 25%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.05) 75%);background-size:200% 100%;animation:skel-shimmer 1.5s infinite}
       .skeleton-line.w75{width:75%}.skeleton-line.w60{width:60%}.skeleton-line.w50{width:50%}.skeleton-line.w85{width:85%}.skeleton-line.w40{width:40%}
+      .skeleton-loading-text{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:12px;color:#3a6a5a;opacity:0;animation:skel-fade-in 1s 0.5s forwards}
+      .skeleton-loading-text span{display:inline-block;animation:skel-pulse 2s infinite}
 
       @keyframes skel-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+      @keyframes skel-fade-in{to{opacity:1}}
+      @keyframes skel-pulse{0%,100%{opacity:0.6}50%{opacity:1}}
 
       /* ---------- skeleton shell (light theme) ---------- */
       [data-theme="light"] .skeleton-shell{background:#f8f9fa}
@@ -221,7 +208,9 @@
             <div class="skeleton-map-bar">
               <div class="skeleton-pill" style="width:48px;height:16px"></div>
             </div>
-            <div class="skeleton-map-body"></div>
+            <div class="skeleton-map-body">
+              <div class="skeleton-loading-text"><span>正在加载全球情报数据...</span></div>
+            </div>
           </div>
           <div class="skeleton-grid">
             <div class="skeleton-panel"><div class="skeleton-panel-header"><div class="skeleton-pill" style="width:80px;height:14px"></div></div><div class="skeleton-panel-body"><div class="skeleton-line w85"></div><div class="skeleton-line w75"></div><div class="skeleton-line w60"></div><div class="skeleton-line"></div><div class="skeleton-line w50"></div><div class="skeleton-line w75"></div></div></div>
@@ -242,20 +231,20 @@
     </aside>
     <noscript>
       <div style="max-width:800px;margin:0 auto;padding:40px 20px;font-family:system-ui,sans-serif;color:#e5e5e5;background:#0a0a0a;">
-        <h1>World Monitor — Real-Time Global Intelligence Dashboard</h1>
-        <p>AI-powered real-time global intelligence dashboard with live news, markets, military tracking, infrastructure monitoring, and geopolitical data. Used by 2M+ people across 190+ countries.</p>
-        <h2>Features</h2>
+        <h1>World Monitor -- AI 驱动的实时全球情报仪表盘</h1>
+        <p>AI 驱动的实时全球情报仪表盘，提供实时新闻、金融市场、军事追踪、基础设施监控和地缘政治数据。</p>
+        <h2>核心功能</h2>
         <ul>
-          <li>Real-time conflict tracking (ACLED, UCDP)</li>
-          <li>Military ADS-B flight monitoring</li>
-          <li>Maritime AIS ship tracking and dark vessel detection</li>
-          <li>Stock market, commodity, and crypto tracking</li>
-          <li>AI-powered intelligence synthesis and daily briefs</li>
-          <li>Country Instability Index (CII) scoring</li>
-          <li>435+ curated RSS news feeds, 45 map layers</li>
-          <li>21 language support</li>
+          <li>实时冲突追踪 (ACLED, UCDP)</li>
+          <li>军事 ADS-B 航班监控</li>
+          <li>海上 AIS 船舶追踪与暗船检测</li>
+          <li>股票、大宗商品与加密货币追踪</li>
+          <li>AI 情报综合与每日简报</li>
+          <li>国家不稳定指数 (CII) 评分</li>
+          <li>435+ 策划新闻源，45 个地图图层</li>
+          <li>21 种语言支持</li>
         </ul>
-        <p><a href="https://www.worldmonitor.app/pro" style="color:#4ade80;">Upgrade to World Monitor Pro</a></p>
+        <p><a href="https://monitor.longyuxu.xyz/pro" style="color:#4ade80;">Upgrade to World Monitor Pro</a></p>
       </div>
     </noscript>
     <!-- Force-clear stale service worker if module scripts 404 (post-deploy cache mismatch) -->

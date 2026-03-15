@@ -244,3 +244,50 @@ export function bindLayerSearch(container: HTMLElement): void {
     });
   });
 }
+
+// Layer preset groups for quick switching
+export interface LayerPreset {
+  id: string;
+  label: string;
+  labelZh: string;
+  layers: Array<keyof MapLayers>;
+}
+
+export const LAYER_PRESETS: LayerPreset[] = [
+  {
+    id: 'geopolitical',
+    label: 'Geopolitical',
+    labelZh: '地缘政治',
+    layers: ['conflicts', 'bases', 'nuclear', 'hotspots', 'military', 'sanctions', 'ucdpEvents', 'protests', 'waterways'],
+  },
+  {
+    id: 'financial',
+    label: 'Financial Markets',
+    labelZh: '金融市场',
+    layers: ['stockExchanges', 'financialCenters', 'centralBanks', 'economic', 'commodityHubs', 'tradeRoutes'],
+  },
+  {
+    id: 'infrastructure',
+    label: 'Infrastructure',
+    labelZh: '基础设施',
+    layers: ['cables', 'pipelines', 'datacenters', 'outages', 'cyberThreats', 'gpsJamming'],
+  },
+  {
+    id: 'asia-focus',
+    label: 'Asia-Pacific Focus',
+    labelZh: '亚太聚焦',
+    layers: ['conflicts', 'military', 'ais', 'flights', 'weather', 'natural', 'protests', 'hotspots', 'tradeRoutes'],
+  },
+  {
+    id: 'natural-disaster',
+    label: 'Natural Disasters',
+    labelZh: '自然灾害',
+    layers: ['natural', 'weather', 'fires', 'climate', 'displacement'],
+  },
+  {
+    id: 'maritime',
+    label: 'Maritime',
+    labelZh: '海上监控',
+    layers: ['ais', 'waterways', 'tradeRoutes', 'cables', 'pipelines', 'commodityPorts'],
+  },
+];

@@ -204,7 +204,14 @@
     "panelCatCentralBanks": "央行与经济",
     "panelCatDeals": "交易与机构",
     "panelCatGulfMena": "海湾与中东",
-    "panelCatTradePolicy": "贸易政策"
+    "panelCatTradePolicy": "贸易政策",
+    "commodity": "大宗商品",
+    "panelCatCorrelation": "关联分析",
+    "panelCatCommodityPrices": "价格与市场",
+    "panelCatMining": "矿业与供应链",
+    "panelCatCommodityEcon": "经济与贸易",
+    "panelCatHappyNews": "好消息",
+    "panelCatHappyPlanet": "地球与公益"
   },
   "panels": {
     "liveNews": "实时新闻",
@@ -280,7 +287,10 @@
     "gulfEconomies": "海湾经济",
     "gulfIndices": "海湾指数",
     "gulfCurrencies": "海湾货币",
-    "gulfOil": "海湾石油"
+    "gulfOil": "海湾石油",
+    "liveWebcams": "实时摄像头",
+    "windyWebcams": "Windy 实时摄像头",
+    "airlineIntel": "航空情报"
   },
   "commands": {
     "prefixes": {
@@ -523,7 +533,8 @@
         "NASA_FIRMS_API_KEY": "消防信息资源管理系统。",
         "OLLAMA_API_URL": "e.g. http://127.0.0.1:11434 (Ollama) or http://127.0.0.1:1234/v1 (LM Studio) — OpenAI-compatible endpoint.",
         "OLLAMA_MODEL": "e.g. llama3.1:8b — model tag to use for summarization."
-      }
+      },
+      "reserveEarlyAccess": "预约抢先体验"
     },
     "settingsWindow": {
       "validating": "正在验证API密钥...",
@@ -757,7 +768,8 @@
       "change": "Change",
       "cut": "cut",
       "hike": "hike",
-      "hold": "hold"
+      "hold": "hold",
+      "infoTooltip": "<strong>经济指标</strong> 来自 FRED、EIA 和 BIS 的关键宏观数据：<ul><li><strong>指标</strong>：GDP、失业率、通胀率、利率</li><li><strong>石油</strong>：WTI/布伦特价格、库存和价差</li><li><strong>政府</strong>：近期美国政府合同授予</li><li><strong>央行</strong>：政策利率和汇率数据</li></ul>"
     },
     "supplyChain": {
       "chokepoints": "咽喉要道",
@@ -774,7 +786,15 @@
       "mineral": "矿产",
       "topProducers": "主要生产国",
       "risk": "风险",
-      "sources": "FRED / NGA / USGS"
+      "sources": "FRED / NGA / USGS",
+      "transit24h": "24小时",
+      "tankers": "油轮",
+      "cargo": "货轮",
+      "wowChange": "环比变化",
+      "vesselTransits": "船舶过境 (180天)",
+      "riskLevel": "风险等级",
+      "routingAction": "航线",
+      "infoTooltip": "<strong>供应链监控</strong> 全球物流与资源追踪：<ul><li><strong>咽喉要道</strong>：海上通行状态、中断评分和船舶数量</li><li><strong>航运</strong>：波罗的海干散货指数和运费趋势</li><li><strong>矿产</strong>：关键矿产集中度风险 (HHI) 和主要生产国</li></ul>点击咽喉要道卡片展开过境历史图表。"
     },
     "tradePolicy": {
       "restrictions": "限制措施",
@@ -794,7 +814,8 @@
       "yoyChange": "同比变化",
       "highTariff": "高",
       "moderateTariff": "中等",
-      "lowTariff": "低"
+      "lowTariff": "低",
+      "infoTooltip": "<strong>贸易政策</strong> WTO 贸易监测：<ul><li><strong>限制</strong>：按国家和行业划分的现行贸易措施</li><li><strong>关税</strong>：按年份的实施关税率趋势</li><li><strong>贸易流</strong>：出口/进口量及同比变化</li><li><strong>壁垒</strong>：技术性贸易壁垒 (TBT/SPS) 通知</li></ul>"
     },
     "gdelt": {
       "empty": "该主题暂无近期文章"
@@ -1463,7 +1484,10 @@
       "summaryError": "无法生成摘要",
       "summaryFailed": "摘要失败",
       "sources": "{{count}}个来源",
-      "relatedAssetsNear": "{{location}}附近的相关资产"
+      "relatedAssetsNear": "{{location}}附近的相关资产",
+      "sortBy": "排序",
+      "sortNewest": "最新",
+      "sortRelevance": "相关性"
     },
     "export": {
       "exportData": "导出数据"
@@ -1591,7 +1615,8 @@
         "estFlow": "预估流量",
         "volume": "成交量",
         "change": "涨跌幅"
-      }
+      },
+      "infoTooltip": "<strong>BTC ETF 追踪器</strong> 追踪美国现货比特币 ETF 的每日预估资金流：<ul><li>资金流入/流出方向和规模</li><li>各基金的成交量和价格变动</li><li>所有追踪 ETF 的净汇总流量</li></ul>"
     },
     "macroSignals": {
       "overall": "综合",
@@ -1608,12 +1633,15 @@
         "hashRate": "Hash Rate",
         "momentum": "Momentum",
         "fearGreed": "恐惧 &amp; 贪婪"
-      }
+      },
+      "infoTooltip": "<strong>市场雷达</strong> 加密货币宏观定位复合信号面板：<ul><li><strong>流动性</strong>：美联储净流动性代理</li><li><strong>资金流</strong>：BTC 与 QQQ 5日回报对比</li><li><strong>市场环境</strong>：QQQ 与 XLP 轮动 (风险偏好/规避)</li><li><strong>BTC 趋势</strong>：价格 vs SMA50/200，梅耶倍数</li><li><strong>算力</strong>：30日网络算力变化</li><li><strong>恐惧与贪婪</strong>：市场情绪指数</li></ul>研判：多数信号看多时买入，否则持现。"
     },
     "panel": {
       "showMethodologyInfo": "Show methodology info",
       "dragToResize": "Drag to resize (double-click to reset)",
-      "openSettings": "Open Settings"
+      "openSettings": "Open Settings",
+      "closePanel": "关闭面板",
+      "addPanel": "添加面板"
     },
     "languageSelector": {
       "selectLanguage": "Select Language",
@@ -1703,6 +1731,38 @@
     "map": {
       "showMap": "显示地图",
       "hideMap": "隐藏地图"
+    },
+    "pinnedWebcams": {
+      "pinFromMap": "从地图固定摄像头"
+    },
+    "breakthroughsTicker": {
+      "noData": "暂无科学突破动态"
+    },
+    "airlineIntel": {
+      "noOpsData": "无运营数据 -- 加载中...",
+      "noFlights": "无航班 -- 请在设置中选择机场。",
+      "noCarrierData": "暂无航司数据。",
+      "noTrackingData": "无航空器追踪数据。",
+      "noNews": "暂无航空新闻。",
+      "enterRoute": "输入航线并搜索票价。",
+      "cachedInsight": "缓存洞察",
+      "demoMode": "演示模式",
+      "pricesIndicative": "所有价格仅供参考"
+    },
+    "escalationCorrelation": {
+      "infoTooltip": "<strong>升级监控</strong> 检测地缘政治信号汇聚：<ul><li>关联军事动向、冲突事件和新闻峰值</li><li>按严重程度 (危急/高/中/低) 评估汇聚区域</li><li>追踪升级或降级趋势的时间变化</li></ul>点击卡片缩放至地图上的该区域。"
+    },
+    "economicCorrelation": {
+      "infoTooltip": "<strong>经济战</strong> 检测经济压力信号汇聚：<ul><li>制裁、贸易限制和货币波动</li><li>与地缘政治行为者相关的大宗商品中断</li><li>经济事件与安全事件的跨域关联</li></ul>点击卡片缩放至受影响区域。"
+    },
+    "markets": {
+      "infoTooltip": "<strong>市场</strong> 实时股票指数、个股和加密货币价格。使用关注列表按钮自定义您的关注列表。迷你图显示近期价格趋势。"
+    },
+    "heatmap": {
+      "infoTooltip": "<strong>板块热力图</strong> 标普 500 板块表现一览。颜色深浅反映日变化幅度。绿色=涨，红色=跌。"
+    },
+    "commodities": {
+      "infoTooltip": "<strong>大宗商品</strong> 关键商品价格，包括黄金、白银、石油、天然气、铜和农产品。迷你图显示近期价格趋势。"
     }
   },
   "popups": {
@@ -2082,7 +2142,9 @@
       "lastReport": "LATEST",
       "nearChokepoint": "NEAR CHOKEPOINT",
       "nearBase": "NEAR BASE",
-      "lastSeen": "LAST SEEN"
+      "lastSeen": "LAST SEEN",
+      "estPosition": "预估位置",
+      "aisLive": "AIS 实时"
     },
     "militaryCluster": {
       "flightActivity": {
@@ -2114,7 +2176,13 @@
       "active": "活跃",
       "reported": "已报告",
       "viewOnSource": "在{{source}}上查看",
-      "attribution": "数据：NASA EONET"
+      "attribution": "数据：NASA EONET",
+      "storm": "风暴",
+      "classification": "分类",
+      "maxWind": "最大风速",
+      "pressure": "气压",
+      "movement": "移动方向",
+      "tropicalSystem": "热带气旋系统"
     },
     "port": {
       "types": {
@@ -2369,7 +2437,8 @@
     "currentVariant": "(当前)",
     "retry": "Retry",
     "refresh": "Refresh",
-    "all": "全部"
+    "all": "全部",
+    "dataTemporarilyUnavailable": "数据暂时不可用"
   },
   "preferences": {
     "display": "显示",
@@ -2387,10 +2456,25 @@
     "mapTheme": "地图主题",
     "mapThemeDesc": "地图图块的视觉风格。",
     "globePreset": "视觉预设",
-    "globePresetDesc": "在经典和增强的地球视觉之间切换。"
+    "globePresetDesc": "在经典和增强的地球视觉之间切换。",
+    "fontFamily": "字体",
+    "fontFamilyDesc": "等宽字体呈现技术感，系统默认字体更易阅读。",
+    "fontMono": "等宽字体",
+    "fontSystem": "系统默认"
   },
   "contextMenu": {
     "openCountryBrief": "打开国家简报",
     "copyCoordinates": "复制坐标"
+  },
+  "premium": {
+    "pro": "PRO",
+    "lockedDesc": "需要 World Monitor 许可密钥",
+    "joinWaitlist": "加入等候名单",
+    "features": {
+      "orefSirens1": "实时以色列导弹与火箭警报",
+      "orefSirens2": "警报区域映射与威胁分类",
+      "telegramIntel1": "精选 Telegram OSINT 频道",
+      "telegramIntel2": "近实时冲突与地缘政治更新"
+    }
   }
 }

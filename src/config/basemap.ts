@@ -37,7 +37,7 @@ export function buildPMTilesStyle(flavor: PMTilesTheme): StyleSpecification | nu
         attribution: '<a href="https://protomaps.com">Protomaps</a> | <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>',
       },
     },
-    layers: layers('basemap', namedFlavor(flavor), { lang: 'en' }) as StyleSpecification['layers'],
+    layers: layers('basemap', namedFlavor(flavor), { lang: 'zh' }) as StyleSpecification['layers'],
   };
 }
 

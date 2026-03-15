@@ -140,12 +140,12 @@ export const escalationAdapter: DomainAdapter = {
     const countryLabel = code ? getCountryNameByCode(code) ?? code : 'Unknown';
 
     const parts: string[] = [];
-    if (types.has('conflict_event')) parts.push('conflict');
-    if (types.has('escalation_outage')) parts.push('comms disruption');
-    if (types.has('news_severity')) parts.push('news escalation');
+    if (types.has('conflict_event')) parts.push('\u51b2\u7a81');
+    if (types.has('escalation_outage')) parts.push('\u901a\u4fe1\u4e2d\u65ad');
+    if (types.has('news_severity')) parts.push('\u65b0\u95fb\u5347\u7ea7');
 
     return parts.length > 0
       ? `${parts.join(' + ')} \u2014 ${countryLabel}`
-      : `Escalation signals \u2014 ${countryLabel}`;
+      : `\u5347\u7ea7\u4fe1\u53f7 \u2014 ${countryLabel}`;
   },
 };

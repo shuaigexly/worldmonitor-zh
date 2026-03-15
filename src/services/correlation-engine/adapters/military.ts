@@ -113,10 +113,10 @@ export const militaryAdapter: DomainAdapter = {
     const hasStrikePackage = [...STRIKE_TYPES].some(t => flightTypes.has(t)) &&
                              [...SUPPORT_TYPES].some(t => flightTypes.has(t));
 
-    if (hasStrikePackage) return `Strike packaging detected \u2014 ${countryLabel}`;
-    if (hasFlights && hasVessels) return `Combined air-naval activity \u2014 ${countryLabel}`;
-    if (hasFlights) return `Military flight cluster \u2014 ${countryLabel}`;
-    if (hasVessels) return `Naval vessel concentration \u2014 ${countryLabel}`;
-    return `Military activity convergence \u2014 ${countryLabel}`;
+    if (hasStrikePackage) return `检测到打击编队 \u2014 ${countryLabel}`;
+    if (hasFlights && hasVessels) return `空海联合活动 \u2014 ${countryLabel}`;
+    if (hasFlights) return `军事航空集群 \u2014 ${countryLabel}`;
+    if (hasVessels) return `海军舰艇集结 \u2014 ${countryLabel}`;
+    return `军事活动汇聚 \u2014 ${countryLabel}`;
   },
 };

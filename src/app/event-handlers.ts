@@ -342,6 +342,32 @@ export class EventHandlerManager implements AppModule {
     };
     document.addEventListener('keydown', this.boundUndoHandler);
 
+    // Panel keyboard navigation: Alt+J/K to cycle panels, Esc to close deep-dive
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === 'Escape') {
+        // Close country deep-dive panel if open
+        const deepDive = document.getElementById('country-deep-dive-panel');
+        if (deepDive && deepDive.getAttribute('aria-hidden') !== 'true') {
+          document.getElementById('deep-dive-close')?.click();
+          return;
+        }
+      }
+      if (!e.altKey) return;
+      const panels = Array.from(document.querySelectorAll<HTMLElement>('.panel:not(.hidden)'));
+      if (panels.length === 0) return;
+      const focused = document.querySelector('.panel.panel-focused') as HTMLElement | null;
+      const idx = focused ? panels.indexOf(focused) : -1;
+      let next = -1;
+      if (e.key === 'j' || e.key === 'ArrowDown') { next = (idx + 1) % panels.length; e.preventDefault(); }
+      else if (e.key === 'k' || e.key === 'ArrowUp') { next = (idx - 1 + panels.length) % panels.length; e.preventDefault(); }
+      if (next >= 0) {
+        focused?.classList.remove('panel-focused');
+        panels[next]!.classList.add('panel-focused');
+        panels[next]!.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+
     const isLocalDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
     this.ctx.container.querySelectorAll<HTMLAnchorElement>('.variant-option').forEach(link => {
       link.addEventListener('click', (e) => {

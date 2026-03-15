@@ -8,7 +8,7 @@ import { CIIPanel } from '@/components';
 import { SITE_VARIANT, STORAGE_KEYS } from '@/config';
 import { getAllowedLayerKeys } from '@/config/map-layer-definitions';
 import type { MapVariant } from '@/config/map-layer-definitions';
-import { LAYER_PRESETS, LAYER_KEY_MAP } from '@/config/commands';
+import { LAYER_PRESETS, LAYER_KEY_MAP, DASHBOARD_PRESETS } from '@/config/commands';
 import { calculateCII, TIER1_COUNTRIES } from '@/services/country-instability';
 import { CURATED_COUNTRIES } from '@/config/countries';
 import { getCountryBbox } from '@/services/country-geometry';
@@ -441,6 +441,19 @@ export class SearchManager implements AppModule {
       case 'panel':
         this.scrollToPanel(action);
         break;
+
+      case 'dashboard': {
+        const preset = DASHBOARD_PRESETS[action];
+        if (!preset) break;
+        const isAll = action === 'all';
+        const presetSet = new Set(preset);
+        for (const [panelId, config] of Object.entries(this.ctx.panelSettings)) {
+          config.enabled = isAll || presetSet.has(panelId);
+        }
+        saveToStorage(STORAGE_KEYS.panels, this.ctx.panelSettings);
+        window.location.reload();
+        break;
+      }
 
       case 'view':
         if (action === 'dark' || action === 'light') {
