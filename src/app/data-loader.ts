@@ -230,7 +230,7 @@ export class DataLoaderManager implements AppModule {
   init(): void {
     this.boundMarketWatchlistHandler = () => {
       void this.loadMarkets().then(async () => {
-        if (SITE_VARIANT === 'finance' && getSecretState('WORLDMONITOR_API_KEY').present) {
+        if (SITE_VARIANT === 'finance') {
           await this.loadStockAnalysis();
           await this.loadStockBacktest();
           await this.loadDailyMarketBrief(true);
@@ -363,10 +363,10 @@ export class DataLoaderManager implements AppModule {
       if (shouldLoadAny(['markets', 'heatmap', 'commodities', 'crypto'])) {
         tasks.push({ name: 'markets', task: runGuarded('markets', () => this.loadMarkets()) });
       }
-      if (SITE_VARIANT === 'finance' && getSecretState('WORLDMONITOR_API_KEY').present && shouldLoad('stock-analysis')) {
+      if (SITE_VARIANT === 'finance' && shouldLoad('stock-analysis')) {
         tasks.push({ name: 'stockAnalysis', task: runGuarded('stockAnalysis', () => this.loadStockAnalysis()) });
       }
-      if (SITE_VARIANT === 'finance' && getSecretState('WORLDMONITOR_API_KEY').present && shouldLoad('stock-backtest')) {
+      if (SITE_VARIANT === 'finance' && shouldLoad('stock-backtest')) {
         tasks.push({ name: 'stockBacktest', task: runGuarded('stockBacktest', () => this.loadStockBacktest()) });
       }
       if (shouldLoad('polymarket')) {
@@ -493,7 +493,7 @@ export class DataLoaderManager implements AppModule {
 
     this.updateSearchIndex();
 
-    if (SITE_VARIANT === 'finance' && getSecretState('WORLDMONITOR_API_KEY').present) {
+    if (SITE_VARIANT === 'finance') {
       await this.loadDailyMarketBrief();
     }
 
@@ -1294,7 +1294,7 @@ export class DataLoaderManager implements AppModule {
   }
 
   async loadDailyMarketBrief(force = false): Promise<void> {
-    if (SITE_VARIANT !== 'finance' || !getSecretState('WORLDMONITOR_API_KEY').present) return;
+    if (SITE_VARIANT !== 'finance') return;
     if (this.ctx.isDestroyed || this.ctx.inFlight.has('dailyMarketBrief')) return;
 
     this.ctx.inFlight.add('dailyMarketBrief');
@@ -1492,7 +1492,7 @@ export class DataLoaderManager implements AppModule {
 
   async loadIntelligenceSignals(): Promise<void> {
     resetHotspotActivity();
-    const _desktopLocked = isDesktopRuntime() && !getSecretState('WORLDMONITOR_API_KEY').present;
+    const _desktopLocked = false; // All panels unlocked
     const tasks: Promise<void>[] = [];
 
     tasks.push((async () => {
@@ -2657,7 +2657,7 @@ export class DataLoaderManager implements AppModule {
   }
 
   async loadTelegramIntel(): Promise<void> {
-    if (isDesktopRuntime() && !getSecretState('WORLDMONITOR_API_KEY').present) return;
+    // All panels unlocked — no key check needed
     try {
       const result = await fetchTelegramFeed();
       this.callPanel('telegram-intel', 'setData', result);

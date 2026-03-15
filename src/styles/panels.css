@@ -2085,7 +2085,7 @@
 
 /* Base state for placeholder */
 .map-bottom-grid::after {
-  content: 'Drop panels here to move them below the map';
+  content: '\62D6\62FD\9762\677F\5230\6B64\5904\4EE5\5C06\5176\79FB\81F3\5730\56FE\4E0B\65B9';
   position: absolute;
   top: 50%;
   left: 50%;

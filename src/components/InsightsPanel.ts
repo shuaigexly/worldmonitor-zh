@@ -576,15 +576,15 @@ export class InsightsPanel extends Panel {
       <div class="insights-stats">
         <div class="insight-stat">
           <span class="insight-stat-value">${insights.multiSourceCount}</span>
-          <span class="insight-stat-label">Multi-source</span>
+          <span class="insight-stat-label">${t('insights.multiSource')}</span>
         </div>
         <div class="insight-stat">
           <span class="insight-stat-value">${insights.fastMovingCount}</span>
-          <span class="insight-stat-label">Fast-moving</span>
+          <span class="insight-stat-label">${t('insights.fastMoving')}</span>
         </div>
         <div class="insight-stat">
           <span class="insight-stat-value">${insights.clusterCount}</span>
-          <span class="insight-stat-label">Clusters</span>
+          <span class="insight-stat-label">${t('insights.clusters')}</span>
         </div>
       </div>
     `;
@@ -593,7 +593,7 @@ export class InsightsPanel extends Panel {
   private renderWorldBrief(brief: string): string {
     return `
       <div class="insights-brief">
-        <div class="insights-section-title">${SITE_VARIANT === 'tech' ? '🚀 TECH BRIEF' : '🌍 WORLD BRIEF'}</div>
+        <div class="insights-section-title">${SITE_VARIANT === 'tech' ? t('insights.techBrief') : t('insights.worldBrief')}</div>
         <div class="insights-brief-text">${escapeHtml(brief)}</div>
       </div>
     `;
@@ -687,16 +687,16 @@ export class InsightsPanel extends Panel {
       <div class="insights-stats">
         <div class="insight-stat">
           <span class="insight-stat-value">${multiSource}</span>
-          <span class="insight-stat-label">Multi-source</span>
+          <span class="insight-stat-label">${t('insights.multiSource')}</span>
         </div>
         <div class="insight-stat">
           <span class="insight-stat-value">${fastMoving}</span>
-          <span class="insight-stat-label">Fast-moving</span>
+          <span class="insight-stat-label">${t('insights.fastMoving')}</span>
         </div>
         ${alerts > 0 ? `
         <div class="insight-stat alert">
           <span class="insight-stat-value">${alerts}</span>
-          <span class="insight-stat-label">Alerts</span>
+          <span class="insight-stat-label">${t('insights.alerts')}</span>
         </div>
         ` : ''}
       </div>
@@ -731,7 +731,7 @@ export class InsightsPanel extends Panel {
 
     return `
       <div class="insights-section insights-missed">
-        <div class="insights-section-title">🎯 ML DETECTED</div>
+        <div class="insights-section-title">${t('insights.mlDetected')}</div>
         ${storiesHtml}
       </div>
     `;
@@ -764,7 +764,7 @@ export class InsightsPanel extends Panel {
 
     return `
       <div class="insights-section insights-convergence">
-        <div class="insights-section-title">📍 GEOGRAPHIC CONVERGENCE</div>
+        <div class="insights-section-title">${t('insights.geoConvergence')}</div>
         ${zonesHtml}
       </div>
     `;
@@ -814,7 +814,7 @@ export class InsightsPanel extends Panel {
 
     return `
       <div class="insights-section insights-focal">
-        <div class="insights-section-title">🎯 FOCAL POINTS</div>
+        <div class="insights-section-title">${t('insights.focalPoints')}</div>
         ${focalPointsHtml}
       </div>
     `;
