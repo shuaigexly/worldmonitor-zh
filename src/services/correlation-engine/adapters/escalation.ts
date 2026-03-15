@@ -32,7 +32,7 @@ const ESCALATION_KEYWORDS = /\b((?:military|armed|air)\s*(?:strike|attack|offens
 
 export const escalationAdapter: DomainAdapter = {
   domain: 'escalation',
-  label: 'Escalation Monitor',
+  label: '升级监控',
   clusterMode: 'country',
   spatialRadius: 0,
   timeWindow: 48,

@@ -2,6 +2,7 @@ import { Panel } from './Panel';
 import type { ConvergenceCard, CorrelationDomain } from '@/services/correlation-engine';
 import { h, replaceChildren } from '@/utils/dom-utils';
 import { getHydratedData } from '@/services/bootstrap';
+import { getCurrentLanguage } from '@/services/i18n';
 
 let correlationBootstrap: Record<string, ConvergenceCard[]> | null | undefined;
 function getCorrelationBootstrap(): Record<string, ConvergenceCard[]> | null {
@@ -41,7 +42,7 @@ export class CorrelationPanel extends Panel {
       this.cards = cards;
       this.requestRender();
     } else {
-      this.showLoading('Waiting for data...');
+      this.showLoading(getCurrentLanguage() === 'zh' ? '等待数据中...' : 'Waiting for data...');
     }
 
     this.boundUpdateHandler = ((e: CustomEvent) => {
@@ -87,7 +88,7 @@ export class CorrelationPanel extends Panel {
       replaceChildren(this.content, h('div', {
         className: 'correlation-empty',
         style: 'padding:12px;text-align:center;opacity:0.5;font-size:11px;',
-      }, 'No active convergence detected'));
+      }, getCurrentLanguage() === 'zh' ? '未检测到活跃收敛信号' : 'No active convergence detected'));
       return;
     }
 

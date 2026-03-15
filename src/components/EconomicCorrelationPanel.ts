@@ -1,8 +1,8 @@
 import { CorrelationPanel } from './CorrelationPanel';
-import { t } from '@/services/i18n';
+import { t, getCurrentLanguage } from '@/services/i18n';
 
 export class EconomicCorrelationPanel extends CorrelationPanel {
   constructor() {
-    super('economic-correlation', 'Economic Warfare', 'economic', t('components.economicCorrelation.infoTooltip'));
+    super('economic-correlation', getCurrentLanguage() === 'zh' ? '经济战' : 'Economic Warfare', 'economic', t('components.economicCorrelation.infoTooltip'));
   }
 }

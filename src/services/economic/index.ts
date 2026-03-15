@@ -86,13 +86,13 @@ interface FredConfig {
 }
 
 const FRED_SERIES: FredConfig[] = [
-  { id: 'WALCL', name: 'Fed Total Assets', unit: '$B', precision: 0 },
-  { id: 'FEDFUNDS', name: 'Fed Funds Rate', unit: '%', precision: 2 },
-  { id: 'T10Y2Y', name: '10Y-2Y Spread', unit: '%', precision: 2 },
-  { id: 'UNRATE', name: 'Unemployment', unit: '%', precision: 1 },
-  { id: 'CPIAUCSL', name: 'CPI Index', unit: '', precision: 1 },
-  { id: 'DGS10', name: '10Y Treasury', unit: '%', precision: 2 },
-  { id: 'VIXCLS', name: 'VIX', unit: '', precision: 2 },
+  { id: 'WALCL', name: '美联储总资产', unit: '$B', precision: 0 },
+  { id: 'FEDFUNDS', name: '联邦基金利率', unit: '%', precision: 2 },
+  { id: 'T10Y2Y', name: '10Y-2Y利差', unit: '%', precision: 2 },
+  { id: 'UNRATE', name: '失业率', unit: '%', precision: 1 },
+  { id: 'CPIAUCSL', name: 'CPI指数', unit: '', precision: 1 },
+  { id: 'DGS10', name: '10年期国债', unit: '%', precision: 2 },
+  { id: 'VIXCLS', name: 'VIX恐慌指数', unit: '', precision: 2 },
 ];
 
 export async function fetchFredData(): Promise<FredSeries[]> {

@@ -135,12 +135,8 @@ const RPC_CACHE_TIER: Record<string, CacheTier> = {
   '/api/webcam/v1/list-webcams': 'no-store',
 };
 
-const PREMIUM_RPC_PATHS = new Set([
-  '/api/market/v1/analyze-stock',
-  '/api/market/v1/get-stock-analysis-history',
-  '/api/market/v1/backtest-stock',
-  '/api/market/v1/list-stored-stock-backtests',
-]);
+// Premium paths disabled for self-hosted deployment
+const PREMIUM_RPC_PATHS = new Set<string>();
 
 /**
  * Creates a Vercel Edge handler for a single domain's routes.

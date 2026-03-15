@@ -15,7 +15,7 @@ const SUPPORT_TYPES = new Set(['tanker', 'awacs', 'surveillance', 'electronic_wa
 
 export const militaryAdapter: DomainAdapter = {
   domain: 'military',
-  label: 'Force Posture',
+  label: '军力态势',
   clusterMode: 'geographic',
   spatialRadius: 500,
   timeWindow: 24,

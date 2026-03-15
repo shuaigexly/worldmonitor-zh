@@ -11,6 +11,55 @@ import { t, getCurrentLanguage } from '@/services/i18n';
 
 type SortMode = 'relevance' | 'newest';
 
+/** Category name translations for zh locale */
+const CATEGORY_ZH: Record<string, string> = {
+  conflict: '冲突', protest: '抗议', disaster: '灾害', diplomatic: '外交',
+  economic: '经济', terrorism: '恐怖主义', cyber: '网络安全', health: '卫生',
+  environmental: '环境', military: '军事', crime: '犯罪', infrastructure: '基础设施',
+  tech: '科技', general: '综合',
+};
+
+/** Feed source name translations for zh locale */
+const SOURCE_ZH: Record<string, string> = {
+  'Bond Market': '债券市场', 'Oil & Gas': '石油天然气', 'Forex News': '外汇新闻',
+  'Seeking Alpha': 'Seeking Alpha', 'CNBC': 'CNBC', 'MarketWatch': 'MarketWatch',
+  'Reuters Business': '路透商业', 'Yahoo Finance': '雅虎财经', 'Financial Times': '金融时报',
+  'Bloomberg Commodities': '彭博大宗商品', 'Reuters Commodities': '路透大宗商品',
+  'CoinDesk': 'CoinDesk', 'CoinTelegraph': 'CoinTelegraph',
+  'BBC World': 'BBC 国际', 'Guardian World': '卫报国际', 'AP News': '美联社',
+  'Reuters World': '路透国际', 'CNN World': 'CNN 国际', 'Reuters US': '路透美国',
+  'NPR News': 'NPR 新闻', 'Wall Street Journal': '华尔街日报',
+  'BBC Middle East': 'BBC 中东', 'Al Jazeera': '半岛电视台', 'Al Arabiya': '阿拉伯卫视',
+  'Hacker News': 'Hacker News', 'MIT Tech Review': 'MIT 科技评论',
+  'VentureBeat AI': 'VentureBeat AI',
+  'Defense One': '防务一号', 'Defense News': '防务新闻', 'Military Times': '军事时报',
+  'Foreign Policy': '外交政策', 'Foreign Affairs': '外交事务',
+  'Kitco News': 'Kitco 新闻', 'Kitco Gold': 'Kitco 黄金',
+  'EIA Reports': 'EIA 报告', 'Reuters Energy': '路透能源',
+  'Bellingcat': 'Bellingcat', 'CSIS': 'CSIS', 'RAND': '兰德',
+  'Brookings': '布鲁金斯', 'Carnegie': '卡内基', 'FAO News': 'FAO 新闻',
+  'BBC Russian': 'BBC 俄语', 'BBC Persian': 'BBC 波斯语', 'BBC Turkce': 'BBC 土耳其语',
+  'France 24': '法国24', 'DW News': '德国之声', 'EuroNews': '欧洲新闻',
+  'Kyiv Independent': '基辅独立报', 'Moscow Times': '莫斯科时报',
+  'Nuclear Energy': '核能', 'Mining & Resources': '矿业与资源',
+  'Chatham House': '查塔姆研究所', 'Atlantic Council': '大西洋理事会',
+  'Nature News': '自然新闻', 'Live Science': '科学前沿', 'New Scientist': '新科学家',
+  'CNBC Markets': 'CNBC 市场', 'CNBC Commodities': 'CNBC 大宗商品',
+  'S&P Global Commodity': '标普全球大宗商品',
+  'Seeking Alpha Metals': 'Seeking Alpha 金属',
+  'Yahoo Finance Commodities': '雅虎财经大宗商品',
+};
+
+function translateSource(name: string): string {
+  if (getCurrentLanguage() !== 'zh') return name;
+  return SOURCE_ZH[name] || name;
+}
+
+function translateCategory(cat: string): string {
+  if (getCurrentLanguage() !== 'zh') return cat.charAt(0).toUpperCase() + cat.slice(1);
+  return CATEGORY_ZH[cat] || cat;
+}
+
 /** Threshold for enabling virtual scrolling */
 const VIRTUAL_SCROLL_THRESHOLD = 15;
 
@@ -441,9 +490,9 @@ export class NewsPanel extends Panel {
         (item) => `
       <div class="item ${item.isAlert ? 'alert' : ''}" ${item.monitorColor ? `style="border-inline-start-color: ${escapeHtml(item.monitorColor)}"` : ''}>
         <div class="item-source">
-          ${escapeHtml(item.source)}
+          ${escapeHtml(translateSource(item.source))}
           ${item.lang && item.lang !== getCurrentLanguage() ? `<span class="lang-badge">${item.lang.toUpperCase()}</span>` : ''}
-          ${item.isAlert ? '<span class="alert-tag">ALERT</span>' : ''}
+          ${item.isAlert ? `<span class="alert-tag">${getCurrentLanguage() === 'zh' ? '警报' : 'ALERT'}</span>` : ''}
         </div>
         <a class="item-title" href="${sanitizeUrl(item.link)}" target="_blank" rel="noopener">${escapeHtml(item.title)}</a>
         <div class="item-time">
@@ -576,25 +625,25 @@ export class NewsPanel extends Panel {
     // Propaganda risk indicator for primary source
     const primaryPropRisk = getSourcePropagandaRisk(cluster.primarySource);
     const primaryPropBadge = primaryPropRisk.risk !== 'low'
-      ? `<span class="propaganda-badge ${primaryPropRisk.risk}" title="${escapeHtml(primaryPropRisk.note || `State-affiliated: ${primaryPropRisk.stateAffiliated || 'Unknown'}`)}">${primaryPropRisk.risk === 'high' ? '⚠ State Media' : '! Caution'}</span>`
+      ? `<span class="propaganda-badge ${primaryPropRisk.risk}" title="${escapeHtml(primaryPropRisk.note || (getCurrentLanguage() === 'zh' ? `国家关联: ${primaryPropRisk.stateAffiliated || '未知'}` : `State-affiliated: ${primaryPropRisk.stateAffiliated || 'Unknown'}`))}">${primaryPropRisk.risk === 'high' ? (getCurrentLanguage() === 'zh' ? '⚠ 官方媒体' : '⚠ State Media') : (getCurrentLanguage() === 'zh' ? '! 注意' : '! Caution')}</span>`
       : '';
 
     // Source credibility badge for primary source (T1=Wire, T2=Verified outlet)
     const primaryTier = getSourceTier(cluster.primarySource);
     const primaryType = getSourceType(cluster.primarySource);
-    const tierLabel = primaryTier === 1 ? 'Wire' : ''; // Don't show "Major" - confusing with story importance
+    const tierLabel = primaryTier === 1 ? (getCurrentLanguage() === 'zh' ? '通讯社' : 'Wire') : '';
     const tierBadge = primaryTier <= 2
-      ? `<span class="tier-badge tier-${primaryTier}" title="${primaryType === 'wire' ? 'Wire Service - Highest reliability' : primaryType === 'gov' ? 'Official Government Source' : 'Verified News Outlet'}">${primaryTier === 1 ? '★' : '●'}${tierLabel ? ` ${tierLabel}` : ''}</span>`
+      ? `<span class="tier-badge tier-${primaryTier}" title="${primaryType === 'wire' ? (getCurrentLanguage() === 'zh' ? '通讯社 - 最高可信度' : 'Wire Service - Highest reliability') : primaryType === 'gov' ? (getCurrentLanguage() === 'zh' ? '官方政府来源' : 'Official Government Source') : (getCurrentLanguage() === 'zh' ? '认证新闻媒体' : 'Verified News Outlet')}">${primaryTier === 1 ? '★' : '●'}${tierLabel ? ` ${tierLabel}` : ''}</span>`
       : '';
 
     // Build "Also reported by" section for multi-source confirmation
     const otherSources = cluster.topSources.filter(s => s.name !== cluster.primarySource);
     const topSourcesHtml = otherSources.length > 0
-      ? `<span class="also-reported">Also:</span>` + otherSources
+      ? `<span class="also-reported">${getCurrentLanguage() === 'zh' ? '其他来源报道:' : 'Also:'}</span>` + otherSources
         .map(s => {
           const propRisk = getSourcePropagandaRisk(s.name);
           const propBadge = propRisk.risk !== 'low'
-            ? `<span class="propaganda-badge ${propRisk.risk}" title="${escapeHtml(propRisk.note || `State-affiliated: ${propRisk.stateAffiliated || 'Unknown'}`)}">${propRisk.risk === 'high' ? '⚠' : '!'}</span>`
+            ? `<span class="propaganda-badge ${propRisk.risk}" title="${escapeHtml(propRisk.note || (getCurrentLanguage() === 'zh' ? `国家关联: ${propRisk.stateAffiliated || '未知'}` : `State-affiliated: ${propRisk.stateAffiliated || 'Unknown'}`))}">${propRisk.risk === 'high' ? '⚠' : '!'}</span>`
             : '';
           return `<span class="top-source tier-${s.tier}">${escapeHtml(s.name)}${propBadge}</span>`;
         })
@@ -628,7 +677,7 @@ export class NewsPanel extends Panel {
 
     // Category tag from threat classification
     const cat = cluster.threat?.category;
-    const catLabel = cat && cat !== 'general' ? cat.charAt(0).toUpperCase() + cat.slice(1) : '';
+    const catLabel = cat && cat !== 'general' ? translateCategory(cat) : '';
     const threatVarMap: Record<string, string> = { critical: '--threat-critical', high: '--threat-high', medium: '--threat-medium', low: '--threat-low', info: '--threat-info' };
     const catColor = cluster.threat ? getCSSColor(threatVarMap[cluster.threat.level] || '--text-dim') : '';
     const categoryBadge = catLabel
@@ -648,14 +697,14 @@ export class NewsPanel extends Panel {
       <div class="${itemClasses}" ${cluster.monitorColor ? `style="border-inline-start-color: ${escapeHtml(cluster.monitorColor)}"` : ''} data-cluster-id="${escapeHtml(cluster.id)}" data-news-id="${escapeHtml(cluster.primaryLink)}">
         <div class="item-source">
           ${tierBadge}
-          ${escapeHtml(cluster.primarySource)}
+          ${escapeHtml(translateSource(cluster.primarySource))}
           ${primaryPropBadge}
           ${langBadge}
           ${newTag}
           ${sourceBadge}
           ${velocityBadge}
           ${sentimentBadge}
-          ${cluster.isAlert ? '<span class="alert-tag">ALERT</span>' : ''}
+          ${cluster.isAlert ? `<span class="alert-tag">${getCurrentLanguage() === 'zh' ? '警报' : 'ALERT'}</span>` : ''}
           ${categoryBadge}
         </div>
         <a class="item-title" href="${sanitizeUrl(cluster.primaryLink)}" target="_blank" rel="noopener">${escapeHtml(cluster.primaryTitle)}</a>

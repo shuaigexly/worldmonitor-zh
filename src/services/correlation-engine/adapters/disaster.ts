@@ -10,7 +10,7 @@ const WEIGHTS: Record<string, number> = {
 
 export const disasterAdapter: DomainAdapter = {
   domain: 'disaster',
-  label: 'Disaster Cascade',
+  label: '灾害连锁',
   clusterMode: 'geographic',
   spatialRadius: 500,
   timeWindow: 96,

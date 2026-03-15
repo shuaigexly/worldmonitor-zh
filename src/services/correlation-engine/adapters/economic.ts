@@ -14,7 +14,7 @@ const SIGNIFICANT_CHANGE_PCT = 1.5;
 
 export const economicAdapter: DomainAdapter = {
   domain: 'economic',
-  label: 'Economic Warfare',
+  label: '经济战',
   clusterMode: 'entity',
   spatialRadius: 0,
   timeWindow: 24,

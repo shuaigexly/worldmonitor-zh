@@ -1342,7 +1342,7 @@
       "enableCoreFeeds": "启用核心数据源",
       "waitingForData": "等待数据中...",
       "refresh": "刷新",
-      "learningMode": "学习模式 - {{minutes}}分钟后可靠",
+      "learningMode": "学习模式 - {{minutes}}分钟后数据稳定",
       "noData": "无数据",
       "enable": "启用",
       "convergenceMetric": "趋同度",
