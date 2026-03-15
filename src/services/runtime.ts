@@ -112,7 +112,8 @@ export function getApiBaseUrl(): string {
 }
 
 function isWorldMonitorWebHost(hostname: string): boolean {
-  return hostname === 'worldmonitor.app'
+  return hostname === 'monitor.longyuxu.xyz'
+    || hostname === 'worldmonitor.app'
     || hostname === 'www.worldmonitor.app'
     || hostname.endsWith('.worldmonitor.app');
 }
@@ -201,6 +202,7 @@ function extractHostnames(...urls: (string | undefined)[]): string[] {
 }
 
 const APP_HOSTS = new Set([
+  'monitor.longyuxu.xyz',
   'worldmonitor.app',
   'www.worldmonitor.app',
   'tech.worldmonitor.app',
@@ -214,7 +216,7 @@ function isAppOriginUrl(urlStr: string): boolean {
   try {
     const u = new URL(urlStr);
     const host = u.hostname;
-    return APP_HOSTS.has(host) || host.endsWith('.worldmonitor.app');
+    return APP_HOSTS.has(host) || host.endsWith('.worldmonitor.app') || host.endsWith('.longyuxu.xyz');
   } catch {
     return false;
   }

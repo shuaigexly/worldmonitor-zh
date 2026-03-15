@@ -1,8 +1,8 @@
-const COOKIE_DOMAIN = '.worldmonitor.app';
+const COOKIE_DOMAIN = '.longyuxu.xyz';
 const MAX_AGE_SECONDS = 365 * 24 * 60 * 60;
 
 function usesCookies(): boolean {
-  return location.hostname.endsWith('worldmonitor.app');
+  return location.hostname.endsWith('longyuxu.xyz') || location.hostname.endsWith('worldmonitor.app');
 }
 
 export function getDismissed(key: string): boolean {

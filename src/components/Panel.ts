@@ -820,9 +820,9 @@ export class Panel {
 
     const ctaBtn = h('button', { type: 'button', className: 'panel-locked-cta' }, t('premium.joinWaitlist'));
     if (isDesktopRuntime()) {
-      ctaBtn.addEventListener('click', () => void invokeTauri<void>('open_url', { url: 'https://worldmonitor.app/pro' }).catch(() => window.open('https://worldmonitor.app/pro', '_blank')));
+      ctaBtn.addEventListener('click', () => void invokeTauri<void>('open_url', { url: 'https://monitor.longyuxu.xyz' }).catch(() => window.open('https://monitor.longyuxu.xyz', '_blank')));
     } else {
-      ctaBtn.addEventListener('click', () => window.open('https://worldmonitor.app/pro', '_blank'));
+      ctaBtn.addEventListener('click', () => window.open('https://monitor.longyuxu.xyz', '_blank'));
     }
     lockedChildren.push(ctaBtn);
 
