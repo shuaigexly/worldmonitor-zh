@@ -548,7 +548,9 @@ export class PanelLayoutManager implements AppModule {
       if (this.ctx.panels[panelKey]) continue;
       if (!DEFAULT_PANELS[panelKey] && !DEFAULT_PANELS[key]) continue;
       const panelConfig = DEFAULT_PANELS[panelKey] ?? DEFAULT_PANELS[key];
-      const label = panelConfig?.name ?? key.charAt(0).toUpperCase() + key.slice(1);
+      const i18nKey = `panels.${panelKey.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase())}`;
+      const translated = t(i18nKey);
+      const label = translated !== i18nKey ? translated : (panelConfig?.name ?? key.charAt(0).toUpperCase() + key.slice(1));
       const panel = new NewsPanel(panelKey, label);
       this.attachRelatedAssetHandlers(panel);
       this.ctx.newsPanels[key] = panel;

@@ -2,6 +2,7 @@ import { Panel } from './Panel';
 import type { DailyMarketBrief } from '@/services/daily-market-brief';
 import { describeFreshness } from '@/services/persistent-cache';
 import { escapeHtml } from '@/utils/sanitize';
+import { t } from '@/services/i18n';
 
 type BriefSource = 'live' | 'cached';
 
@@ -38,7 +39,7 @@ function formatChange(change: number | null): string {
 
 export class DailyMarketBriefPanel extends Panel {
   constructor() {
-    super({ id: 'daily-market-brief', title: 'Daily Market Brief' });
+    super({ id: 'daily-market-brief', title: t('panels.dailyMarketBrief') });
   }
 
   public renderBrief(brief: DailyMarketBrief, source: BriefSource = 'live'): void {

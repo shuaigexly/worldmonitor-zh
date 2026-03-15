@@ -1,5 +1,5 @@
 import { Panel } from './Panel';
-import { getLocale } from '@/services/i18n';
+import { getLocale, t } from '@/services/i18n';
 
 interface CityEntry {
   id: string;
@@ -139,7 +139,7 @@ export class WorldClockPanel extends Panel {
   private dragStartY = 0;
 
   constructor() {
-    super({ id: 'world-clock', title: 'World Clock', trackActivity: false });
+    super({ id: 'world-clock', title: t('panels.worldClock'), trackActivity: false });
     this.homeCityId = detectHomeCity();
     this.selectedCities = loadSelectedCities();
 

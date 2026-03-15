@@ -1,6 +1,7 @@
 import { Panel } from './Panel';
 import { escapeHtml } from '@/services/forecast';
 import type { Forecast } from '@/services/forecast';
+import { t } from '@/services/i18n';
 
 const DOMAINS = ['all', 'conflict', 'market', 'supply_chain', 'political', 'military', 'infrastructure'] as const;
 
@@ -62,7 +63,7 @@ export class ForecastPanel extends Panel {
   private activeDomain: string = 'all';
 
   constructor() {
-    super({ id: 'forecast', title: 'AI Forecasts', showCount: true });
+    super({ id: 'forecast', title: t('panels.forecast'), showCount: true });
     injectStyles();
     this.content.addEventListener('click', (e) => {
       const target = e.target as HTMLElement;

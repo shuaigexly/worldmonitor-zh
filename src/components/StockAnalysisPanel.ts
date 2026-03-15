@@ -2,6 +2,7 @@ import { Panel } from './Panel';
 import type { StockAnalysisResult } from '@/services/stock-analysis';
 import { escapeHtml, sanitizeUrl } from '@/utils/sanitize';
 import type { StockAnalysisHistory } from '@/services/stock-analysis-history';
+import { t } from '@/services/i18n';
 
 function formatChange(change: number): string {
   const rounded = Number.isFinite(change) ? change.toFixed(2) : '0.00';
@@ -27,7 +28,7 @@ function list(items: string[], tone: string): string {
 
 export class StockAnalysisPanel extends Panel {
   constructor() {
-    super({ id: 'stock-analysis', title: 'Premium Stock Analysis' });
+    super({ id: 'stock-analysis', title: t('panels.stockAnalysis') });
   }
 
   public renderAnalyses(items: StockAnalysisResult[], historyBySymbol: StockAnalysisHistory = {}, source: 'live' | 'cached' = 'live'): void {
