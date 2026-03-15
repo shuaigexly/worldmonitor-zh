@@ -306,7 +306,6 @@
     "financialRegulation": "金融监管",
     "institutional": "对冲基金与私募",
     "analysis": "市场分析",
-    "gccInvestments": "GCC投资",
     "gccNews": "海湾商业新闻",
     "worldClock": "世界时钟",
     "commodityNews": "大宗商品新闻",
@@ -321,7 +320,7 @@
     "escalationCorrelation": "升级监控",
     "economicCorrelation": "经济战",
     "disasterCorrelation": "灾害级联",
-    "pinnedWebcams": "固定摄像头"
+    "happyMap": "正能量地图"
   },
   "commands": {
     "prefixes": {
@@ -2489,7 +2488,8 @@
     "dataTemporarilyUnavailable": "数据暂时不可用",
     "stockAnalysisUnavailable": "股票分析暂时不可用。",
     "stockBacktestUnavailable": "回测暂时不可用。",
-    "backtestWaitingSymbols": "回测正在等待符合条件的自选股代码。"
+    "backtestWaitingSymbols": "回测正在等待符合条件的自选股代码。",
+    "fullscreen": "全屏"
   },
   "preferences": {
     "display": "显示",
@@ -2527,5 +2527,19 @@
       "telegramIntel1": "精选 Telegram OSINT 频道",
       "telegramIntel2": "近实时冲突与地缘政治更新"
     }
+  },
+  "map": {
+    "flatMode": "2D 地图",
+    "globeMode": "3D 地球",
+    "exitTvMode": "退出电视模式"
+  },
+  "banner": {
+    "strikeCapable": "具备打击能力",
+    "viewRegion": "查看区域"
+  },
+  "dailyBrief": {
+    "bullish": "看涨",
+    "defensive": "防御",
+    "neutral": "中性"
   }
 }

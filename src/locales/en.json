@@ -288,7 +288,8 @@
     "gulfIndices": "Gulf Indices",
     "gulfCurrencies": "Gulf Currencies",
     "gulfOil": "Gulf Oil",
-    "airlineIntel": "✈️ Airline Intelligence"
+    "airlineIntel": "✈️ Airline Intelligence",
+    "happyMap": "Good News Map"
   },
   "commands": {
     "prefixes": {
@@ -2447,7 +2448,8 @@
     "currentVariant": "(current)",
     "retry": "Retry",
     "refresh": "Refresh",
-    "all": "All"
+    "all": "All",
+    "fullscreen": "Fullscreen"
   },
   "preferences": {
     "display": "Display",
@@ -2485,5 +2487,19 @@
   "contextMenu": {
     "openCountryBrief": "Open Country Brief",
     "copyCoordinates": "Copy Coordinates"
+  },
+  "map": {
+    "flatMode": "2D Map",
+    "globeMode": "3D Globe",
+    "exitTvMode": "Exit TV Mode"
+  },
+  "banner": {
+    "strikeCapable": "STRIKE CAPABLE",
+    "viewRegion": "View Region"
+  },
+  "dailyBrief": {
+    "bullish": "Bullish",
+    "defensive": "Defensive",
+    "neutral": "Neutral"
   }
 }

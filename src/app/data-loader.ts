@@ -223,7 +223,6 @@ export class DataLoaderManager implements AppModule {
   private readonly perFeedFallbackBatchSize = 2;
   private readonly maxConcurrentFallbackCategories = 3;
   private activeFallbackCategories = 0;
-  private feedHealth = new Map<string, number>(); // url -> last success timestamp
   private lastGoodDigest: ListFeedDigestResponse | null = null;
 
   constructor(ctx: AppContext, callbacks: DataLoaderCallbacks) {
@@ -327,21 +326,13 @@ export class DataLoaderManager implements AppModule {
     return feeds.slice(0, maxFeeds);
   }
 
-  private selectHealthyFeeds<T extends { url: string | Record<string, string> }>(feeds: T[], limit: number): T[] {
+  private selectHealthyFeeds<T extends { name: string }>(feeds: T[], limit: number): T[] {
     if (feeds.length <= limit) return feeds;
-    const getFeedUrl = (f: T): string => typeof f.url === 'string' ? f.url : Object.values(f.url)[0] ?? '';
+    const failures = getFeedFailures();
+    // Sort feeds with fewer failures first (healthy feeds preferred)
     return [...feeds]
-      .sort((a, b) => (this.feedHealth.get(getFeedUrl(b)) ?? 0) - (this.feedHealth.get(getFeedUrl(a)) ?? 0))
+      .sort((a, b) => (failures.get(a.name)?.count ?? 0) - (failures.get(b.name)?.count ?? 0))
       .slice(0, limit);
-  }
-
-  recordFeedSuccess(url: string): void {
-    this.feedHealth.set(url, Date.now());
-  }
-
-  recordFeedFailure(url: string): void {
-    // Don't overwrite a recent success with 0; just leave it if it existed
-    if (!this.feedHealth.has(url)) this.feedHealth.set(url, 0);
   }
 
   private async waitForFallbackSlot(): Promise<void> {
@@ -904,8 +895,9 @@ export class DataLoaderManager implements AppModule {
           },
         });
 
-        // Graduated ramp: if <50% success, try more feeds
-        if (items.length === 0 && enabledFeeds.length > this.perFeedFallbackCategoryFeedLimit) {
+        // Graduated ramp: if <50% of initial feeds produced items, try more
+        const expectedMinItems = Math.ceil(initialFeeds.length * 0.5);
+        if (items.length < expectedMinItems && enabledFeeds.length > this.perFeedFallbackCategoryFeedLimit) {
           const rampFeeds = this.selectHealthyFeeds(enabledFeeds, this.perFeedFallbackCategoryFeedRampLimit)
             .filter(f => !initialFeeds.includes(f));
           if (rampFeeds.length > 0) {

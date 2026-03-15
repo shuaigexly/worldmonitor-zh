@@ -180,7 +180,7 @@ export function createDomainGateway(
 
     // API key validation (origin-aware)
     const keyCheck = validateApiKey(request, {
-      forceKey: PREMIUM_RPC_PATHS.has(pathname) && !process.env.SELF_HOSTED_OPEN,
+      forceKey: PREMIUM_RPC_PATHS.has(pathname) && process.env.SELF_HOSTED_OPEN !== 'true',
     });
     if (keyCheck.required && !keyCheck.valid) {
       return new Response(JSON.stringify({ error: keyCheck.error }), {

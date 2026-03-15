@@ -50,4 +50,40 @@ describe('premium stock gateway enforcement', () => {
     }));
     assert.equal(publicAllowed.status, 200);
   });
+
+  it('bypasses premium key check when SELF_HOSTED_OPEN=true', async () => {
+    process.env.SELF_HOSTED_OPEN = 'true';
+    const handler = createDomainGateway([
+      {
+        method: 'GET',
+        path: '/api/market/v1/analyze-stock',
+        handler: async () => new Response(JSON.stringify({ ok: true }), { status: 200 }),
+      },
+    ]);
+
+    process.env.WORLDMONITOR_VALID_KEYS = 'real-key-123';
+
+    const premiumOpen = await handler(new Request('https://worldmonitor.app/api/market/v1/analyze-stock?symbol=AAPL', {
+      headers: { Origin: 'https://worldmonitor.app' },
+    }));
+    assert.equal(premiumOpen.status, 200, 'Premium RPC should be open when SELF_HOSTED_OPEN=true');
+  });
+
+  it('does not bypass premium check when SELF_HOSTED_OPEN is set to non-true value', async () => {
+    process.env.SELF_HOSTED_OPEN = 'false';
+    const handler = createDomainGateway([
+      {
+        method: 'GET',
+        path: '/api/market/v1/analyze-stock',
+        handler: async () => new Response(JSON.stringify({ ok: true }), { status: 200 }),
+      },
+    ]);
+
+    process.env.WORLDMONITOR_VALID_KEYS = 'real-key-123';
+
+    const premiumStillBlocked = await handler(new Request('https://worldmonitor.app/api/market/v1/analyze-stock?symbol=AAPL', {
+      headers: { Origin: 'https://worldmonitor.app' },
+    }));
+    assert.equal(premiumStillBlocked.status, 401, 'Premium RPC should remain gated when SELF_HOSTED_OPEN is not exactly "true"');
+  });
 });
