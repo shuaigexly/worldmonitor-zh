@@ -162,7 +162,7 @@ export class AviationCommandBar {
         <div id="aviation-cmd-suggestions"></div>
         <div id="aviation-cmd-result"></div>
         <div id="aviation-cmd-history-list"></div>
-        <div id="aviation-cmd-hint">Press <kbd>Enter</kbd> to run · <kbd>Esc</kbd> to close · <kbd>Ctrl+J</kbd> to toggle</div>
+        <div id="aviation-cmd-hint">按 <kbd>Enter</kbd> 执行 · <kbd>Esc</kbd> 关闭 · <kbd>Ctrl+J</kbd> 切换</div>
       </div>`;
 
         document.body.appendChild(this.overlay);

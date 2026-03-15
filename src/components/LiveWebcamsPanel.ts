@@ -150,7 +150,7 @@ export class LiveWebcamsPanel extends Panel {
   private createFullscreenButton(): void {
     this.fullscreenBtn = document.createElement('button');
     this.fullscreenBtn.className = 'live-mute-btn';
-    this.fullscreenBtn.title = 'Fullscreen';
+    this.fullscreenBtn.title = '全屏';
     this.fullscreenBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>';
     this.fullscreenBtn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -233,14 +233,14 @@ export class LiveWebcamsPanel extends Panel {
     gridBtn.className = `webcam-view-btn${this.viewMode === 'grid' ? ' active' : ''}`;
     gridBtn.dataset.mode = 'grid';
     gridBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>';
-    gridBtn.title = 'Grid view';
+    gridBtn.title = '网格视图';
     gridBtn.addEventListener('click', () => this.setViewMode('grid'));
 
     const singleBtn = document.createElement('button');
     singleBtn.className = `webcam-view-btn${this.viewMode === 'single' ? ' active' : ''}`;
     singleBtn.dataset.mode = 'single';
     singleBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="3" y="3" width="18" height="14" rx="2"/><rect x="3" y="19" width="18" height="2" rx="1"/></svg>';
-    singleBtn.title = 'Single view';
+    singleBtn.title = '单画面';
     singleBtn.addEventListener('click', () => this.setViewMode('single'));
 
     // On mobile we force single view and hide/disable the grid toggle.
@@ -388,7 +388,7 @@ export class LiveWebcamsPanel extends Panel {
 
     const message = document.createElement('div');
     message.className = 'webcam-embed-fallback-text';
-    message.textContent = 'This stream is blocked or failed to load.';
+    message.textContent = '此直播流被阻止或加载失败。';
 
     const actions = document.createElement('div');
     actions.className = 'webcam-embed-fallback-actions';

@@ -116,7 +116,7 @@ export class DeductionPanel extends Panel {
         this.submitBtn.disabled = true;
 
         this.resultContainer.className = 'deduction-result loading';
-        this.resultContainer.textContent = 'Analyzing timeline and impact...';
+        this.resultContainer.textContent = '分析时间线和影响...';
 
         try {
             const resp = await client.deductSituation({
@@ -136,13 +136,13 @@ export class DeductionPanel extends Panel {
                 );
                 this.resultContainer.appendChild(meta);
             } else {
-                this.resultContainer.textContent = 'No analysis available for this query.';
+                this.resultContainer.textContent = '此查询无可用分析。';
             }
         } catch (err) {
             if (!this.element?.isConnected) return;
             console.error('[DeductionPanel] Error:', err);
             this.resultContainer.className = 'deduction-result error';
-            this.resultContainer.textContent = 'An error occurred while analyzing the situation.';
+            this.resultContainer.textContent = '分析情况时发生错误。';
         } finally {
             this.isSubmitting = false;
             if (this.element?.isConnected) {

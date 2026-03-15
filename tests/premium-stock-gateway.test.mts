@@ -4,14 +4,19 @@ import { afterEach, describe, it } from 'node:test';
 import { createDomainGateway } from '../server/gateway.ts';
 
 const originalKeys = process.env.WORLDMONITOR_VALID_KEYS;
+const originalSelfHosted = process.env.SELF_HOSTED_OPEN;
 
 afterEach(() => {
   if (originalKeys == null) delete process.env.WORLDMONITOR_VALID_KEYS;
   else process.env.WORLDMONITOR_VALID_KEYS = originalKeys;
+  if (originalSelfHosted == null) delete process.env.SELF_HOSTED_OPEN;
+  else process.env.SELF_HOSTED_OPEN = originalSelfHosted;
 });
 
 describe('premium stock gateway enforcement', () => {
   it('requires a World Monitor key for premium stock RPCs even from trusted browser origins', async () => {
+    // Ensure SELF_HOSTED_OPEN is not set so premium enforcement is active
+    delete process.env.SELF_HOSTED_OPEN;
     const handler = createDomainGateway([
       {
         method: 'GET',

@@ -135,8 +135,12 @@ const RPC_CACHE_TIER: Record<string, CacheTier> = {
   '/api/webcam/v1/list-webcams': 'no-store',
 };
 
-// Premium paths disabled for self-hosted deployment
-const PREMIUM_RPC_PATHS = new Set<string>();
+const PREMIUM_RPC_PATHS = new Set([
+  '/api/market/v1/analyze-stock',
+  '/api/market/v1/get-stock-analysis-history',
+  '/api/market/v1/backtest-stock',
+  '/api/market/v1/list-stored-stock-backtests',
+]);
 
 /**
  * Creates a Vercel Edge handler for a single domain's routes.
@@ -176,7 +180,7 @@ export function createDomainGateway(
 
     // API key validation (origin-aware)
     const keyCheck = validateApiKey(request, {
-      forceKey: PREMIUM_RPC_PATHS.has(pathname),
+      forceKey: PREMIUM_RPC_PATHS.has(pathname) && !process.env.SELF_HOSTED_OPEN,
     });
     if (keyCheck.required && !keyCheck.valid) {
       return new Response(JSON.stringify({ error: keyCheck.error }), {

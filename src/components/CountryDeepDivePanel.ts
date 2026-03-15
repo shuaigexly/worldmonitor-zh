@@ -719,10 +719,10 @@ export class CountryDeepDivePanel implements CountryBriefPanel {
     this.briefBody = briefBody;
 
     this.renderInitialSignals(signals);
-    newsBody.append(this.makeLoading('Loading country headlines…'));
-    militaryBody.append(this.makeLoading('Loading flights, vessels, and nearby bases…'));
-    infraBody.append(this.makeLoading('Computing nearby critical infrastructure…'));
-    economicBody.append(this.makeLoading('Loading available indicators…'));
+    newsBody.append(this.makeLoading('加载国家头条...'));
+    militaryBody.append(this.makeLoading('加载航班、船舶和附近基地...'));
+    infraBody.append(this.makeLoading('计算附近关键基础设施...'));
+    economicBody.append(this.makeLoading('加载可用指标...'));
     marketsBody.append(this.makeLoading(t('countryBrief.loadingMarkets')));
     briefBody.append(this.makeLoading(t('countryBrief.generatingBrief')));
 
@@ -779,7 +779,7 @@ export class CountryDeepDivePanel implements CountryBriefPanel {
       recentHigh: [],
     };
     this.renderSignalBreakdown(seeded);
-    this.signalRecentBody.append(this.makeLoading('Loading top high-severity signals…'));
+    this.signalRecentBody.append(this.makeLoading('加载高严重性信号...'));
   }
 
   private addSignalChip(container: HTMLElement, count: number, label: string, icon: string, cls: string): void {

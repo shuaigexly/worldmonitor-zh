@@ -645,7 +645,7 @@ export default defineConfig({
         globIgnores: ['**/ml*.js', '**/onnx*.wasm', '**/locale-*.js'],
         // globe.gl + three.js grows main bundle past the 2 MiB default limit
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
-        navigateFallback: null,
+        navigateFallback: '/offline.html',
         skipWaiting: true,
         clientsClaim: true,
         cleanupOutdatedCaches: true,
@@ -653,7 +653,11 @@ export default defineConfig({
         runtimeCaching: [
           {
             urlPattern: ({ request }: { request: Request }) => request.mode === 'navigate',
-            handler: 'NetworkOnly',
+            handler: 'NetworkFirst',
+            options: {
+              networkTimeoutSeconds: 5,
+              cacheName: 'navigation',
+            },
           },
           {
             urlPattern: ({ url, sameOrigin }: { url: URL; sameOrigin: boolean }) =>

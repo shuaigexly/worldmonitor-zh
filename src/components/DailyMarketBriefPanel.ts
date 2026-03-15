@@ -21,9 +21,9 @@ function formatGeneratedTime(isoTimestamp: string, timezone: string): string {
 }
 
 function stanceLabel(stance: DailyMarketBrief['items'][number]['stance']): string {
-  if (stance === 'bullish') return 'Bullish';
-  if (stance === 'defensive') return 'Defensive';
-  return 'Neutral';
+  if (stance === 'bullish') return t('dailyBrief.bullish') || '看涨';
+  if (stance === 'defensive') return t('dailyBrief.defensive') || '防御';
+  return t('dailyBrief.neutral') || '中性';
 }
 
 function formatPrice(price: number | null): string {
@@ -32,7 +32,7 @@ function formatPrice(price: number | null): string {
 }
 
 function formatChange(change: number | null): string {
-  if (typeof change !== 'number' || !Number.isFinite(change)) return 'Flat';
+  if (typeof change !== 'number' || !Number.isFinite(change)) return t('dailyBrief.flat') || '持平';
   const sign = change > 0 ? '+' : '';
   return `${sign}${change.toFixed(2)}%`;
 }
@@ -59,11 +59,11 @@ export class DailyMarketBriefPanel extends Panel {
 
         <div style="display:grid;gap:10px">
           <div style="padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,0.02)">
-            <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px">Action Plan</div>
+            <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px">${escapeHtml(t('dailyBrief.actionPlan') || '行动计划')}</div>
             <div style="font-size:12px;line-height:1.5">${escapeHtml(brief.actionPlan)}</div>
           </div>
           <div style="padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,0.02)">
-            <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px">Risk Watch</div>
+            <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px">${escapeHtml(t('dailyBrief.riskWatch') || '风险关注')}</div>
             <div style="font-size:12px;line-height:1.5">${escapeHtml(brief.riskWatch)}</div>
           </div>
         </div>
@@ -83,7 +83,7 @@ export class DailyMarketBriefPanel extends Panel {
               </div>
               <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
                 <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim)">${escapeHtml(stanceLabel(item.stance))}</div>
-                ${item.relatedHeadline ? `<div style="font-size:11px;color:var(--text-dim);text-align:right;max-width:55%">Linked headline</div>` : ''}
+                ${item.relatedHeadline ? `<div style="font-size:11px;color:var(--text-dim);text-align:right;max-width:55%">${escapeHtml(t('dailyBrief.linkedHeadline') || '关联标题')}</div>` : ''}
               </div>
               <div style="font-size:12px;line-height:1.45">${escapeHtml(item.note)}</div>
             </div>

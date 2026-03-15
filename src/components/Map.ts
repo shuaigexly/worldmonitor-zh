@@ -2642,7 +2642,7 @@ export class MapComponent {
           const darkIndicator = document.createElement('div');
           darkIndicator.className = 'dark-vessel-indicator';
           darkIndicator.textContent = '⚠️';
-          darkIndicator.title = 'AIS Signal Lost';
+          darkIndicator.title = 'AIS 信号丢失';
           div.appendChild(darkIndicator);
         }
 
@@ -2814,7 +2814,7 @@ export class MapComponent {
         dot.style.backgroundColor = color;
         dot.style.opacity = '0.75';
         dot.style.cursor = 'pointer';
-        dot.title = isCluster ? `${(cam as WebcamCluster).count} webcams` : ((cam as WebcamEntry).title || 'Webcam');
+        dot.title = isCluster ? `${(cam as WebcamCluster).count} 个摄像头` : ((cam as WebcamEntry).title || '摄像头');
         dot.addEventListener('click', (e) => {
           e.stopPropagation();
           if (isCluster) {
@@ -2848,7 +2848,7 @@ export class MapComponent {
     ].join(';');
     const closeBtn = document.createElement('button');
     closeBtn.style.cssText = 'position:absolute;top:4px;right:4px;background:none;border:none;color:#888;cursor:pointer;font-size:14px;line-height:1;padding:2px 4px;';
-    closeBtn.setAttribute('aria-label', 'Close');
+    closeBtn.setAttribute('aria-label', '关闭');
     closeBtn.textContent = '×';
     closeBtn.addEventListener('click', () => tooltip.remove());
     tooltip.appendChild(closeBtn);
@@ -2872,7 +2872,7 @@ export class MapComponent {
 
     const title = document.createElement('div');
     title.style.cssText = 'font-weight:bold;color:#00d4ff;padding-right:18px;';
-    title.textContent = `\u{1F4F7} ${cam.title || cam.category || 'Webcam'}`;
+    title.textContent = `\u{1F4F7} ${cam.title || cam.category || '摄像头'}`;
     tooltip.appendChild(title);
 
     const meta = document.createElement('div');
@@ -2884,7 +2884,7 @@ export class MapComponent {
     previewDiv.style.marginTop = '6px';
     const loadingSpan = document.createElement('span');
     loadingSpan.style.cssText = 'opacity:0.5;font-size:10px;';
-    loadingSpan.textContent = 'Loading preview...';
+    loadingSpan.textContent = '加载预览...';
     previewDiv.appendChild(loadingSpan);
     tooltip.appendChild(previewDiv);
 
@@ -2894,7 +2894,7 @@ export class MapComponent {
       link.target = '_blank';
       link.rel = 'noopener';
       link.style.cssText = 'display:block;margin-top:4px;color:#00d4ff;font-size:11px;text-decoration:none;';
-      link.textContent = 'Open on Windy \u2197';
+      link.textContent = '在 Windy 查看 \u2197';
       tooltip.appendChild(link);
     }
 
@@ -2914,7 +2914,7 @@ export class MapComponent {
           } else {
             const span = document.createElement('span');
             span.style.cssText = 'opacity:0.5;font-size:10px;';
-            span.textContent = 'Preview unavailable';
+            span.textContent = '预览不可用';
             previewDiv.appendChild(span);
           }
 
@@ -2978,7 +2978,7 @@ export class MapComponent {
           const item = document.createElement('div');
           item.style.cssText = 'padding:3px 2px;cursor:pointer;color:#aaa;border-bottom:1px solid rgba(255,255,255,0.08);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
           const nameSpan = document.createElement('span');
-          nameSpan.textContent = webcam.title || webcam.category || 'Webcam';
+          nameSpan.textContent = webcam.title || webcam.category || '摄像头';
           item.appendChild(nameSpan);
           if (webcam.country) {
             const cc = document.createElement('span');
@@ -3229,16 +3229,16 @@ export class MapComponent {
       // LOW: Default when no significant activity
       if (hasBreaking || matchedCount >= 4 || score >= 10) {
         spot.level = 'high';
-        spot.status = hasBreaking ? 'BREAKING NEWS' : 'High activity';
+        spot.status = hasBreaking ? '突发新闻' : '高活跃度';
       } else if (matchedCount >= 2 || score >= 4) {
         spot.level = 'elevated';
-        spot.status = 'Elevated activity';
+        spot.status = '活跃度上升';
       } else if (matchedCount >= 1) {
         spot.level = 'low';
-        spot.status = 'Recent mentions';
+        spot.status = '近期提及';
       } else {
         spot.level = 'low';
-        spot.status = 'Monitoring';
+        spot.status = '监控中';
       }
 
       // Update dynamic escalation score

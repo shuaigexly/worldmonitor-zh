@@ -146,7 +146,7 @@ export class WorldClockPanel extends Panel {
     this.settingsBtn = document.createElement('button');
     this.settingsBtn.className = 'wc-settings-btn';
     this.settingsBtn.textContent = '\u2699';
-    this.settingsBtn.title = 'Select cities';
+    this.settingsBtn.title = '选择城市';
     this.settingsBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       this.toggleSettings();
@@ -177,12 +177,12 @@ export class WorldClockPanel extends Panel {
     this.showingSettings = !this.showingSettings;
     if (this.showingSettings) {
       this.settingsBtn.textContent = '\u2713';
-      this.settingsBtn.title = 'Done';
+      this.settingsBtn.title = '完成';
       this.settingsBtn.classList.add('wc-active');
       this.renderSettings();
     } else {
       this.settingsBtn.textContent = '\u2699';
-      this.settingsBtn.title = 'Select cities';
+      this.settingsBtn.title = '选择城市';
       this.settingsBtn.classList.remove('wc-active');
       this.renderClocks();
     }

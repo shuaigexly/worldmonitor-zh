@@ -99,6 +99,17 @@ const CRITICAL_KEYWORDS: KeywordMap = {
   'nuclear meltdown': 'disaster',
   'major combat operations': 'military',
   'declared war': 'conflict',
+  // Chinese keywords
+  '\u6838\u6253\u51fb': 'military',       // nuclear strike
+  '\u6838\u6218\u4e89': 'military',       // nuclear war
+  '\u5168\u9762\u6218\u4e89': 'conflict', // all-out war
+  '\u5ba3\u6218': 'conflict',             // declare war
+  '\u6234\u4e25': 'military',             // martial law
+  '\u653f\u53d8': 'military',             // coup
+  '\u5316\u5b66\u6b66\u5668\u888b\u51fb': 'terrorism', // chemical weapon attack
+  '\u5927\u89c4\u6a21\u4f24\u4ea1': 'conflict', // mass casualty
+  '\u5bfc\u5f39\u88ad\u51fb': 'military', // missile strike
+  '\u62a5\u590d\u6027\u6253\u51fb': 'military', // retaliatory strike
 };
 
 const HIGH_KEYWORDS: KeywordMap = {
@@ -160,6 +171,27 @@ const HIGH_KEYWORDS: KeywordMap = {
   'cruise missile': 'military',
   'air defense intercepted': 'military',
   'forces struck': 'conflict',
+  // Chinese keywords
+  '\u6218\u4e89': 'conflict',             // war
+  '\u6b66\u88c5\u51b2\u7a81': 'conflict', // armed conflict
+  '\u7a7a\u88ad': 'conflict',             // airstrike
+  '\u65e0\u4eba\u673a\u88ad\u51fb': 'conflict', // drone strike
+  '\u5bfc\u5f39\u53d1\u5c04': 'military', // missile launch
+  '\u519b\u4e8b\u5347\u7ea7': 'military', // military escalation
+  '\u5730\u9762\u8fdb\u653b': 'military', // ground offensive
+  '\u70ae\u51fb': 'conflict',             // shelling/bombardment
+  '\u4eba\u8d28': 'terrorism',            // hostage
+  '\u6050\u6016\u88ad\u51fb': 'terrorism', // terror attack
+  '\u7f51\u7edc\u653b\u51fb': 'cyber',   // cyber attack
+  '\u52d2\u7d22\u8f6f\u4ef6': 'cyber',   // ransomware
+  '\u5236\u88c1': 'economic',             // sanctions
+  '\u5730\u9707': 'disaster',             // earthquake
+  '\u6d77\u5578': 'disaster',             // tsunami
+  '\u53f0\u98ce': 'disaster',             // typhoon
+  '\u5f39\u9053\u5bfc\u5f39': 'military', // ballistic missile
+  '\u5de1\u822a\u5bfc\u5f39': 'military', // cruise missile
+  '\u53f0\u6d77\u5371\u673a': 'military', // Taiwan Strait crisis
+  '\u5357\u6d77\u51b2\u7a81': 'military', // South China Sea conflict
 };
 
 const MEDIUM_KEYWORDS: KeywordMap = {
@@ -196,6 +228,27 @@ const MEDIUM_KEYWORDS: KeywordMap = {
   'power outage': 'infrastructure',
   'internet outage': 'infrastructure',
   'derailment': 'infrastructure',
+  // Chinese keywords
+  '\u6297\u8bae': 'protest',              // protest
+  '\u9a9a\u4e71': 'protest',              // riot/unrest
+  '\u793a\u5a01': 'protest',              // demonstration
+  '\u519b\u4e8b\u6f14\u4e60': 'military', // military exercise
+  '\u8d38\u6613\u6218': 'economic',       // trade war
+  '\u5173\u7a0e': 'economic',             // tariff
+  '\u7ecf\u6d4e\u8870\u9000': 'economic', // recession
+  '\u901a\u8d27\u81a8\u80c0': 'economic', // inflation
+  '\u80a1\u5e02\u5d29\u76d8': 'economic', // stock market crash
+  '\u6d2a\u6c34': 'disaster',             // flood
+  '\u91ce\u706b': 'disaster',             // wildfire
+  '\u706b\u5c71\u7206\u53d1': 'disaster', // volcanic eruption
+  '\u75ab\u60c5\u7206\u53d1': 'health',   // outbreak
+  '\u7ba1\u9053\u7206\u70b8': 'infrastructure', // pipeline explosion
+  '\u5927\u505c\u7535': 'infrastructure',  // blackout
+  '\u65ad\u7f51': 'infrastructure',        // internet outage
+  '\u53f0\u6d77\u5c40\u52bf': 'military',  // Taiwan Strait situation
+  '\u5357\u6d77\u5c40\u52bf': 'military',  // South China Sea situation
+  '\u4e2d\u7f8e\u5173\u7cfb': 'diplomatic', // China-US relations
+  '\u50b5\u52a1\u5371\u673a': 'economic',  // debt crisis
 };
 
 const LOW_KEYWORDS: KeywordMap = {
@@ -221,6 +274,16 @@ const LOW_KEYWORDS: KeywordMap = {
   'disease': 'health',
   'virus': 'health',
   'public health': 'health',
+  // Chinese keywords
+  '\u9009\u4e3e': 'diplomatic',           // election
+  '\u5168\u6c11\u516c\u6295': 'diplomatic', // referendum
+  '\u5cf0\u4f1a': 'diplomatic',           // summit
+  '\u505c\u706b': 'diplomatic',           // ceasefire
+  '\u548c\u5e73\u534f\u8bae': 'diplomatic', // peace agreement
+  '\u6c14\u5019\u53d8\u5316': 'environmental', // climate change
+  '\u6c61\u67d3': 'environmental',        // pollution
+  '\u5e72\u65f1': 'environmental',        // drought
+  '\u75ab\u82d7': 'health',               // vaccine
   'covid': 'health',
   'interest rate': 'economic',
   'gdp': 'economic',

@@ -326,7 +326,7 @@ export class NewsPanel extends Panel {
         titleEl.textContent = translated;
         titleEl.dataset.original = originalText;
         element.innerHTML = '✓';
-        element.title = 'Original: ' + originalText;
+        element.title = '原文: ' + originalText;
         element.classList.add('translated');
       } else {
         element.innerHTML = '文';

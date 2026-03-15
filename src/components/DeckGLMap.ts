@@ -3476,8 +3476,8 @@ export class DeckGLMap {
       }
       case 'webcam-layer': {
         const label = 'count' in obj
-          ? `${obj.count} webcams`
-          : (obj.title || obj.name || 'Webcam');
+          ? `${obj.count} 个摄像头`
+          : (obj.title || obj.name || '摄像头');
         return { html: `<div class="deckgl-tooltip"><strong>${text(label)}</strong></div>` };
       }
       default:
@@ -3941,7 +3941,7 @@ export class DeckGLMap {
 
     const authorBadge = document.createElement('div');
     authorBadge.className = 'map-author-badge';
-    authorBadge.textContent = '© Elie Habib · Someone™';
+    authorBadge.textContent = '© World Monitor';
     toggles.appendChild(authorBadge);
 
     this.container.appendChild(toggles);

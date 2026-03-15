@@ -54,8 +54,8 @@ export { hasTilesUrl as hasPMTilesUrl };
 export const MAP_PROVIDER_OPTIONS: { value: MapProvider; label: string }[] = (() => {
   const opts: { value: MapProvider; label: string }[] = [];
   if (hasTilesUrl) {
-    opts.push({ value: 'auto', label: 'Auto (PMTiles → OpenFreeMap fallback)' });
-    opts.push({ value: 'pmtiles', label: 'PMTiles (self-hosted)' });
+    opts.push({ value: 'auto', label: '\u81ea\u52a8 (PMTiles \u2192 OpenFreeMap \u56de\u9000)' });
+    opts.push({ value: 'pmtiles', label: 'PMTiles (\u81ea\u6258\u7ba1)' });
   }
   opts.push({ value: 'openfreemap', label: 'OpenFreeMap' });
   opts.push({ value: 'carto', label: 'CARTO' });
@@ -63,24 +63,24 @@ export const MAP_PROVIDER_OPTIONS: { value: MapProvider; label: string }[] = (()
 })();
 
 const PMTILES_THEMES: { value: string; label: string }[] = [
-  { value: 'black', label: 'Black (deepest dark)' },
-  { value: 'dark', label: 'Dark' },
-  { value: 'grayscale', label: 'Grayscale' },
-  { value: 'light', label: 'Light' },
-  { value: 'white', label: 'White' },
+  { value: 'black', label: '\u7eaf\u9ed1 (\u6700\u6df1)' },
+  { value: 'dark', label: '\u6df1\u8272' },
+  { value: 'grayscale', label: '\u7070\u5ea6' },
+  { value: 'light', label: '\u6d45\u8272' },
+  { value: 'white', label: '\u7eaf\u767d' },
 ];
 
 export const MAP_THEME_OPTIONS: Record<MapProvider, { value: string; label: string }[]> = {
   pmtiles: PMTILES_THEMES,
   auto: PMTILES_THEMES,
   openfreemap: [
-    { value: 'dark', label: 'Dark' },
-    { value: 'positron', label: 'Positron (light)' },
+    { value: 'dark', label: '\u6df1\u8272' },
+    { value: 'positron', label: 'Positron (\u6d45\u8272)' },
   ],
   carto: [
-    { value: 'dark-matter', label: 'Dark Matter' },
-    { value: 'voyager', label: 'Voyager (light)' },
-    { value: 'positron', label: 'Positron (light)' },
+    { value: 'dark-matter', label: 'Dark Matter (\u6df1\u8272)' },
+    { value: 'voyager', label: 'Voyager (\u6d45\u8272)' },
+    { value: 'positron', label: 'Positron (\u6d45\u8272)' },
   ],
 };
 

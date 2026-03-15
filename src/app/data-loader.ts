@@ -218,8 +218,12 @@ export class DataLoaderManager implements AppModule {
   private readonly digestBreakerCooldownMs = 5 * 60 * 1000;
   private readonly persistedDigestMaxAgeMs = 6 * 60 * 60 * 1000;
   private readonly perFeedFallbackCategoryFeedLimit = 3;
+  private readonly perFeedFallbackCategoryFeedRampLimit = 5;
   private readonly perFeedFallbackIntelFeedLimit = 6;
   private readonly perFeedFallbackBatchSize = 2;
+  private readonly maxConcurrentFallbackCategories = 3;
+  private activeFallbackCategories = 0;
+  private feedHealth = new Map<string, number>(); // url -> last success timestamp
   private lastGoodDigest: ListFeedDigestResponse | null = null;
 
   constructor(ctx: AppContext, callbacks: DataLoaderCallbacks) {
@@ -321,6 +325,34 @@ export class DataLoaderManager implements AppModule {
   private selectLimitedFeeds<T>(feeds: T[], maxFeeds: number): T[] {
     if (feeds.length <= maxFeeds) return feeds;
     return feeds.slice(0, maxFeeds);
+  }
+
+  private selectHealthyFeeds<T extends { url: string | Record<string, string> }>(feeds: T[], limit: number): T[] {
+    if (feeds.length <= limit) return feeds;
+    const getFeedUrl = (f: T): string => typeof f.url === 'string' ? f.url : Object.values(f.url)[0] ?? '';
+    return [...feeds]
+      .sort((a, b) => (this.feedHealth.get(getFeedUrl(b)) ?? 0) - (this.feedHealth.get(getFeedUrl(a)) ?? 0))
+      .slice(0, limit);
+  }
+
+  recordFeedSuccess(url: string): void {
+    this.feedHealth.set(url, Date.now());
+  }
+
+  recordFeedFailure(url: string): void {
+    // Don't overwrite a recent success with 0; just leave it if it existed
+    if (!this.feedHealth.has(url)) this.feedHealth.set(url, 0);
+  }
+
+  private async waitForFallbackSlot(): Promise<void> {
+    while (this.activeFallbackCategories >= this.maxConcurrentFallbackCategories) {
+      await new Promise(r => setTimeout(r, 200));
+    }
+    this.activeFallbackCategories++;
+  }
+
+  private releaseFallbackSlot(): void {
+    this.activeFallbackCategories = Math.max(0, this.activeFallbackCategories - 1);
   }
 
   private shouldShowIntelligenceNotifications(): boolean {
@@ -856,21 +888,42 @@ export class DataLoaderManager implements AppModule {
         return [];
       }
 
-      const fallbackFeeds = this.selectLimitedFeeds(enabledFeeds, this.perFeedFallbackCategoryFeedLimit);
-      if (fallbackFeeds.length < enabledFeeds.length) {
-        console.warn(`[News] Digest missing for "${category}", using limited per-feed fallback (${fallbackFeeds.length}/${enabledFeeds.length} feeds)`);
-      } else {
-        console.warn(`[News] Digest missing for "${category}", using per-feed fallback (${fallbackFeeds.length} feeds)`);
-      }
+      // Health-priority feed selection with graduated ramp
+      await this.waitForFallbackSlot();
+      let items: NewsItem[];
+      try {
+        const initialFeeds = this.selectHealthyFeeds(enabledFeeds, this.perFeedFallbackCategoryFeedLimit);
+        console.warn(`[News] Digest missing for "${category}", using health-priority fallback (${initialFeeds.length}/${enabledFeeds.length} feeds)`);
 
-      const items = await fetchCategoryFeeds(fallbackFeeds, {
-        batchSize: this.perFeedFallbackBatchSize,
-        onBatch: (partialItems) => {
-          scheduleRender(partialItems);
-          this.flashMapForNews(partialItems);
-          checkBatchForBreakingAlerts(partialItems);
-        },
-      });
+        items = await fetchCategoryFeeds(initialFeeds, {
+          batchSize: this.perFeedFallbackBatchSize,
+          onBatch: (partialItems) => {
+            scheduleRender(partialItems);
+            this.flashMapForNews(partialItems);
+            checkBatchForBreakingAlerts(partialItems);
+          },
+        });
+
+        // Graduated ramp: if <50% success, try more feeds
+        if (items.length === 0 && enabledFeeds.length > this.perFeedFallbackCategoryFeedLimit) {
+          const rampFeeds = this.selectHealthyFeeds(enabledFeeds, this.perFeedFallbackCategoryFeedRampLimit)
+            .filter(f => !initialFeeds.includes(f));
+          if (rampFeeds.length > 0) {
+            console.warn(`[News] Ramping fallback for "${category}" (+${rampFeeds.length} feeds)`);
+            const rampItems = await fetchCategoryFeeds(rampFeeds, {
+              batchSize: this.perFeedFallbackBatchSize,
+              onBatch: (partialItems) => {
+                scheduleRender(partialItems);
+                this.flashMapForNews(partialItems);
+                checkBatchForBreakingAlerts(partialItems);
+              },
+            });
+            items.push(...rampItems);
+          }
+        }
+      } finally {
+        this.releaseFallbackSlot();
+      }
 
       this.renderNewsForCategory(category, items);
       if (panel) {
@@ -882,9 +935,9 @@ export class DataLoaderManager implements AppModule {
 
         if (items.length === 0) {
           const failures = getFeedFailures();
-          const failedFeeds = fallbackFeeds.filter(f => failures.has(f.name));
+          const failedFeeds = enabledFeeds.filter((f: { name: string }) => failures.has(f.name));
           if (failedFeeds.length > 0) {
-            const names = failedFeeds.map(f => f.name).join(', ');
+            const names = failedFeeds.map((f: { name: string }) => f.name).join(', ');
             panel.showError(`${t('common.noNewsAvailable')} (${names} failed)`);
           }
         }

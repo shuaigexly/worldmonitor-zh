@@ -42,7 +42,7 @@ export class CorrelationPanel extends Panel {
       this.cards = cards;
       this.requestRender();
     } else {
-      this.showLoading(getCurrentLanguage() === 'zh' ? '等待数据中...' : 'Waiting for data...');
+      this.showLoading(getCurrentLanguage() === 'zh' ? '等待数据...' : 'Waiting for data...');
     }
 
     this.boundUpdateHandler = ((e: CustomEvent) => {
@@ -88,7 +88,7 @@ export class CorrelationPanel extends Panel {
       replaceChildren(this.content, h('div', {
         className: 'correlation-empty',
         style: 'padding:12px;text-align:center;opacity:0.5;font-size:11px;',
-      }, getCurrentLanguage() === 'zh' ? '未检测到活跃收敛信号' : 'No active convergence detected'));
+      }, getCurrentLanguage() === 'zh' ? '未检测到活跃的趋势汇聚' : 'No active convergence detected'));
       return;
     }
 
@@ -164,7 +164,7 @@ export class CorrelationPanel extends Panel {
     } else if (card.score >= 60 && this.hasLiveData) {
       children.push(h('div', {
         style: 'padding:4px;font-size:9px;opacity:0.4;font-style:italic;',
-      }, 'Analyzing...'));
+      }, getCurrentLanguage() === 'zh' ? '分析中...' : 'Analyzing...'));
     }
 
     if (card.location) {

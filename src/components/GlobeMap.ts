@@ -1453,7 +1453,7 @@ export class GlobeMap {
       previewDiv.style.marginTop = '4px';
       const loadingSpan = document.createElement('span');
       loadingSpan.style.cssText = 'opacity:.5;font-size:11px;';
-      loadingSpan.textContent = 'Loading preview...';
+      loadingSpan.textContent = '加载预览...';
       previewDiv.appendChild(loadingSpan);
       wrapper.appendChild(previewDiv);
 
@@ -1462,12 +1462,12 @@ export class GlobeMap {
       link.target = '_blank';
       link.rel = 'noopener';
       link.style.cssText = 'display:block;color:#00d4ff;font-size:11px;text-decoration:none;';
-      link.textContent = 'Open on Windy \u2197';
+      link.textContent = '在 Windy 查看 \u2197';
       wrapper.appendChild(link);
 
       const attribution = document.createElement('div');
       attribution.style.cssText = 'opacity:.4;font-size:9px;margin-top:4px;';
-      attribution.textContent = 'Powered by Windy';
+      attribution.textContent = 'Windy 提供';
       wrapper.appendChild(attribution);
 
       import('@/services/webcams').then(({ fetchWebcamImage }) => {
@@ -1483,7 +1483,7 @@ export class GlobeMap {
           } else {
             const span = document.createElement('span');
             span.style.cssText = 'opacity:.5;font-size:11px;';
-            span.textContent = 'Preview unavailable';
+            span.textContent = '预览不可用';
             previewDiv.appendChild(span);
           }
           const pinBtn = document.createElement('button');
@@ -1491,10 +1491,10 @@ export class GlobeMap {
           pinBtn.style.cssText = 'display:block;margin-top:4px;';
           if (isPinned(d.webcamId)) {
             pinBtn.classList.add('webcam-pin-btn--pinned');
-            pinBtn.textContent = '\u{1F4CC} Pinned';
+            pinBtn.textContent = '\u{1F4CC} 已固定';
             pinBtn.disabled = true;
           } else {
-            pinBtn.textContent = '\u{1F4CC} Pin';
+            pinBtn.textContent = '\u{1F4CC} 固定';
             pinBtn.addEventListener('click', (e) => {
               e.stopPropagation();
               pinWebcam({
@@ -1507,7 +1507,7 @@ export class GlobeMap {
                 playerUrl: img.playerUrl || '',
               });
               pinBtn.classList.add('webcam-pin-btn--pinned');
-              pinBtn.textContent = '\u{1F4CC} Pinned';
+              pinBtn.textContent = '\u{1F4CC} 已固定';
               pinBtn.disabled = true;
             });
           }
@@ -1518,11 +1518,11 @@ export class GlobeMap {
       const wrapper = el.firstElementChild!;
       const header = document.createElement('span');
       header.style.cssText = 'color:#00d4ff;font-weight:bold;';
-      header.textContent = `\u{1F4F7} ${d.count} webcams`;
+      header.textContent = `\u{1F4F7} ${d.count} 个摄像头`;
       wrapper.appendChild(header);
       const loadingSpan = document.createElement('span');
       loadingSpan.style.cssText = 'display:block;opacity:.5;font-size:10px;';
-      loadingSpan.textContent = 'Loading list...';
+      loadingSpan.textContent = '加载列表...';
       wrapper.appendChild(loadingSpan);
     }
     el.addEventListener('mouseenter', () => {
@@ -1571,7 +1571,7 @@ export class GlobeMap {
 
           const closeBtn2 = document.createElement('button');
           closeBtn2.style.cssText = 'position:absolute;top:4px;right:4px;background:none;border:none;color:#888;cursor:pointer;font-size:14px;line-height:1;padding:2px 4px;';
-          closeBtn2.setAttribute('aria-label', 'Close');
+          closeBtn2.setAttribute('aria-label', '关闭');
           closeBtn2.textContent = '\u00D7';
           closeBtn2.addEventListener('click', () => this.hideTooltip());
           wrapper.appendChild(closeBtn2);
@@ -1589,7 +1589,7 @@ export class GlobeMap {
             item.style.cssText = 'padding:2px 0;cursor:pointer;color:#aaa;border-bottom:1px solid rgba(255,255,255,0.08);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
 
             const nameSpan = document.createElement('span');
-            nameSpan.textContent = webcam.title || webcam.category || 'Webcam';
+            nameSpan.textContent = webcam.title || webcam.category || '摄像头';
             item.appendChild(nameSpan);
 
             if (webcam.country) {
@@ -1703,7 +1703,7 @@ export class GlobeMap {
       </div>`;
     const authorBadge = document.createElement('div');
     authorBadge.className = 'map-author-badge';
-    authorBadge.textContent = '© Elie Habib · Someone™';
+    authorBadge.textContent = '© World Monitor';
     el.appendChild(authorBadge);
     this.container.appendChild(el);
 
@@ -1735,7 +1735,7 @@ export class GlobeMap {
       const renderModeLabel = (): string => currentMode() === 'emoji' ? '&#128247; icon mode' : '&#128512; emoji mode';
       const modeBtn = document.createElement('button');
       modeBtn.style.cssText = 'background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);color:#00d4ff;font-size:10px;padding:1px 6px;border-radius:3px;cursor:pointer;margin-left:2px;';
-      modeBtn.title = 'Toggle webcam marker style';
+      modeBtn.title = '切换摄像头标记样式';
       modeBtn.innerHTML = renderModeLabel();
       modeBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1746,7 +1746,7 @@ export class GlobeMap {
         this.flushMarkers();
       });
       const modeLabel = document.createElement('span');
-      modeLabel.textContent = 'Marker: ';
+      modeLabel.textContent = '标记: ';
       modeRow.appendChild(modeLabel);
       modeRow.appendChild(modeBtn);
       webcamToggleEl.insertAdjacentElement('afterend', modeRow);
