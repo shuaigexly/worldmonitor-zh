@@ -308,10 +308,8 @@ export class DataLoaderManager implements AppModule {
   }
 
   private isPerFeedFallbackEnabled(): boolean {
-    // Desktop: server digest has fewer categories than client FEEDS config.
-    // Enable per-feed RSS fallback so missing categories fetch directly.
-    if (isDesktopRuntime()) return true;
-    return isFeatureEnabled('newsPerFeedFallback');
+    // Self-hosted: no pre-populated digest cache, always enable RSS fallback
+    return true;
   }
 
   private getStaleNewsItems(category: string): NewsItem[] {
