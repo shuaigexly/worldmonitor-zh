@@ -5,6 +5,8 @@ const DISMISSED_KEY = 'wm-community-dismissed';
 const DISCUSSION_URL = 'https://github.com/shuaigexly/worldmonitor-zh/discussions';
 
 export function mountCommunityWidget(): void {
+  // Disabled: community discussion widget no longer shown
+  return;
   if (getDismissed(DISMISSED_KEY)) return;
   if (document.querySelector('.community-widget')) return;
 

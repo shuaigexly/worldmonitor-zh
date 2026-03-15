@@ -1112,7 +1112,7 @@ export class DataLoaderManager implements AppModule {
         panel.renderAnalyses(cachedSnapshots, cachedHistory, 'cached');
         return;
       }
-      panel.showError('Premium stock analysis is temporarily unavailable.');
+      panel.showError(t('common.stockAnalysisUnavailable'));
     }
   }
 
@@ -1136,7 +1136,7 @@ export class DataLoaderManager implements AppModule {
       const results = await fetchStockBacktestsForTargets(staleTargets);
       if (results.length === 0) {
         if (stored.length === 0) {
-          panel.showRetrying('Backtesting is waiting for eligible watchlist symbols.');
+          panel.showRetrying(t('common.backtestWaitingSymbols'));
         }
         return;
       }
@@ -1148,7 +1148,7 @@ export class DataLoaderManager implements AppModule {
         panel.renderBacktests(stored, 'cached');
         return;
       }
-      panel.showError('Premium stock backtesting is temporarily unavailable.');
+      panel.showError(t('common.stockBacktestUnavailable'));
     }
   }
 
@@ -1202,7 +1202,7 @@ export class DataLoaderManager implements AppModule {
       const finnhubConfigMsg = 'FINNHUB_API_KEY not configured — add in Settings';
 
       if (stocksResult.rateLimited && stocksResult.data.length === 0) {
-        const rlMsg = 'Market data temporarily unavailable (rate limited) — retrying shortly';
+        const rlMsg = t('common.rateLimitedMarket');
         this.ctx.panels['commodities']?.showError(rlMsg);
       } else if (stocksResult.skipped) {
         this.ctx.statusPanel?.updateApi('Finnhub', { status: 'error' });
