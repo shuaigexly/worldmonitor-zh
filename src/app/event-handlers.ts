@@ -29,7 +29,6 @@ import {
   INTEL_SOURCES,
   DEFAULT_PANELS,
 } from '@/config';
-import { VARIANT_META } from '@/config/variant-meta';
 import { isDesktopRuntime } from '@/services/runtime';
 import {
   saveSnapshot,
@@ -784,7 +783,7 @@ export class EventHandlerManager implements AppModule {
 
   private async navigateToVariant(
     variant: string,
-    options: { href?: string; isLocalDev: boolean },
+    _options?: { href?: string; isLocalDev?: boolean },
   ): Promise<void> {
     trackVariantSwitch(SITE_VARIANT, variant);
     await this.exitFullscreenForNavigation();
